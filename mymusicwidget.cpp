@@ -39,6 +39,7 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
                 }
             });
     loadMedia("../FFTW/sound_lib/music");
+    //分支功能测试 dev
 }
 
 MyMusicWidget *MyMusicWidget::GetKernal()
