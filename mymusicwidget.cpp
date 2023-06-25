@@ -40,6 +40,8 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
             });
     loadMedia("../FFTW/sound_lib/music");
     //分支功能测试 dev
+
+    //分支功能：图片旋转优化开发完毕
 }
 
 MyMusicWidget *MyMusicWidget::GetKernal()
