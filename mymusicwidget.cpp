@@ -39,6 +39,8 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
                 }
             });
     loadMedia("../FFTW/sound_lib/music");
+    //修复音乐播放器bug,自动播放第一首音乐
+    playlist->setCurrentIndex(m_currentIndex);
 }
 
 MyMusicWidget *MyMusicWidget::GetKernal()
