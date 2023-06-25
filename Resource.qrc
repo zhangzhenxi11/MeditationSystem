@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>ling.ico</file>
+        <file>myico.rc</file>
+    </qresource>
+</RCC>

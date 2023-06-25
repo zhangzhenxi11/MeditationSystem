@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>theme_slices/风铃.png</file>
+        <file>theme_slices/风铃@2x.png</file>
+        <file>theme_slices/风铃_选中.png</file>
+        <file>theme_slices/风铃_选中@2x.png</file>
+        <file>theme_slices/空谷.png</file>
+        <file>theme_slices/空谷@2x.png</file>
+        <file>theme_slices/空谷_选中.png</file>
+        <file>theme_slices/空谷_选中@2x.png</file>
+        <file>theme_slices/林间.png</file>
+        <file>theme_slices/林间@2x.png</file>
+        <file>theme_slices/林间_选中.png</file>
+        <file>theme_slices/林间_选中@2x.png</file>
+        <file>theme_slices/清溪.png</file>
+        <file>theme_slices/清溪@2x.png</file>
+        <file>theme_slices/清溪_选中.png</file>
+        <file>theme_slices/清溪_选中@2x.png</file>
+        <file>theme_slices/雨滴.png</file>
+        <file>theme_slices/雨滴@2x.png</file>
+        <file>theme_slices/雨滴_选中.png</file>
+        <file>theme_slices/雨滴_选中@2x.png</file>
+    </qresource>
+</RCC>

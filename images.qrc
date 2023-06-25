@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/610.bmp</file>
+        <file>images/612.bmp</file>
+        <file>images/620.bmp</file>
+        <file>images/622.bmp</file>
+        <file>images/624.bmp</file>
+        <file>images/632.bmp</file>
+        <file>images/danqu.png</file>
+        <file>images/danquxunhuan.png</file>
+        <file>images/List_loop.png</file>
+        <file>images/mute.bmp</file>
+        <file>images/mute.png</file>
+        <file>images/mute-hover.png</file>
+        <file>images/next.png</file>
+        <file>images/next-hover.png</file>
+        <file>images/pause.png</file>
+        <file>images/pause-hover.png</file>
+        <file>images/pipe0.png</file>
+        <file>images/play.png</file>
+        <file>images/play-hover.png</file>
+        <file>images/pre.png</file>
+        <file>images/pre-hover.png</file>
+        <file>images/quit.png</file>
+        <file>images/Random_loop.png</file>
+        <file>images/record.png</file>
+        <file>images/Single_cycle.png</file>
+        <file>images/singlecycle.png</file>
+        <file>images/styles.css</file>
+        <file>images/suiji.png</file>
+        <file>images/volume.png</file>
+        <file>images/volume-hover.png</file>
+        <file>images/volumn.bmp</file>
+        <file>images/xunhuan.png</file>
+        <file>images/Pole.png</file>
+        <file>images/ling.ico</file>
+    </qresource>
+</RCC>

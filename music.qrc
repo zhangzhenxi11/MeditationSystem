@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sound_lib/music/001轻松冥想  7天深度睡眠：安静.mp3</file>
+        <file>sound_lib/music/002轻松冥想  7天深度睡眠：放松.mp3</file>
+        <file>sound_lib/music/003轻松冥想  7天深度睡眠：舒缓.mp3</file>
+    </qresource>
+</RCC>
