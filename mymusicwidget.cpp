@@ -39,8 +39,6 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
                 }
             });
     loadMedia("../FFTW/sound_lib/music");
-//    playlist->setCurrentIndex(m_currentIndex);
-
 }
 
 MyMusicWidget *MyMusicWidget::GetKernal()
