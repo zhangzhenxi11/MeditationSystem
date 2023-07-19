@@ -1,5 +1,6 @@
 ﻿#include "mysliderwidget.h"
 #include "ui_mysliderwidget.h"
+#include <QCollator>
 
 mySliderWidget::mySliderWidget(QWidget *parent) :
     QWidget(parent),
@@ -8,28 +9,81 @@ mySliderWidget::mySliderWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     m_ptrStackWidget = new QStackedWidget;
+    // ffemg库版本
+    unsigned version = avcodec_version();
+    qDebug()<< "verision" << version;
+
     this->initForm();
-    loadMedia("../FFTW/sound_lib/mp4");
+    loadMedia("../FFTW/sound_lib/mp4", "../FFTW/sound_lib/mp3");
+
 }
 
-void mySliderWidget::loadMedia(const QString &filePath)
+void mySliderWidget::loadMedia(const QString& videoFilePath,const QString & audioFilePath)
 {
-    QDir dir(filePath);
+    QDir dir(videoFilePath);
+    QDir dirAudio(audioFilePath);
+
     QStringList filters;
-    filters << "*.mp4" << "*.wav";
-    QFileInfoList fileInfoList = dir.entryInfoList(QStringList()<<"*.mp4");
-    if(fileInfoList.count()<=0)
+    filters << "*.mp4" << "*.wav"<< "*.mp3";
+
+    QFileInfoList VideofileInfoList = dir.entryInfoList(filters,QDir::Files,QDir::Name);   //按文件类型筛选，名字排序
+    QFileInfoList AudiofileInfoList = dirAudio.entryInfoList(filters,QDir::Files,QDir::Name);
+
+    if(VideofileInfoList.count()<=0 || AudiofileInfoList.count()<=0)
         return;
-    for (int i = 0; i < fileInfoList.count(); ++i)
+    QString outputFilePath = " ";
+    dir.cdUp();
+    QString DirPath = dir.path();
+    //检查输出文件夹内是否为空
+    QString dirfilePath = DirPath + "/output";
+    QDir dirOut(dirfilePath);
+    QFileInfoList outFileCout = dirOut.entryInfoList(QStringList()<<"*.mp4");
+    QStringList outputFilePathList;
+    int filecout = 0;
+    if(outFileCout.count()== 0)
     {
-        QString filepath = fileInfoList.at(i).absoluteFilePath();
-        QUrl url = QUrl::fromLocalFile(filepath);
+        while (VideofileInfoList.count()> 0 && filecout <= VideofileInfoList.count()-1)
+        {
+            QString   videoFilePath = VideofileInfoList.at(filecout).absoluteFilePath();
+            QString   audioFilePath = AudiofileInfoList.at(filecout).absoluteFilePath();
+            qDebug() << videoFilePath;
+            qDebug() << audioFilePath;
+            QFileInfo videoFileInfo = QFileInfo(videoFilePath);
+            QString   filename = videoFileInfo.fileName().split('.').at(0); // 文件名
+            m_videoCombinaAudio.insert(videoFilePath,audioFilePath);
+            QString   outputFilePath = QString(DirPath + "/output/%1_video.mp4").arg(filename);
+            mergeVideoWithAudio(videoFilePath, audioFilePath, outputFilePath);
+            outputFilePathList << outputFilePath;
+            filecout ++;
+        }
+    }
+    else
+    {   //直接遍历文件夹
+        for(int i=0;i< outFileCout.count();i++)
+        {
+            QString outputFilePath = outFileCout.at(i).absoluteFilePath();
+            outputFilePathList<< outputFilePath;
+        }
+    }
+    for(int i = 0; i < outputFilePathList.count(); ++i)
+    {
+        outputFilePath = outputFilePathList.at(i);
+        QUrl url = QUrl::fromLocalFile(outputFilePath);
         playlist->addMedia(url);
-        QFileInfo fileInfo(filepath);
+        QFileInfo fileInfo(outputFilePath);
         ui->listWidget->addItem(fileInfo.fileName());
     }
     if (mVideoPlayer->state()!=QMediaPlayer::PlayingState)
         playlist->setCurrentIndex(0);
+}
+
+
+void mySliderWidget::mergeVideoWithAudio(const QString &videoFilePath, const QString &audioFilePath, const QString &outputFilePath)
+{
+    QString ffmpegCommand = "ffmpeg -i " + videoFilePath + " -i " + audioFilePath + " -c:v copy -c:a copy -map 0:v:0 -map 1:a:0 " + outputFilePath;
+    QProcess process;
+    process.start(ffmpegCommand);
+    process.waitForFinished(-1); // 等待进程完成
 }
 
 void mySliderWidget::initForm()
@@ -87,6 +141,8 @@ void mySliderWidget::initForm()
                     mVideoPlayer->play();
                 }
             });
+
+
 //    mVideoPlayer->stop();
 }
 
@@ -128,6 +184,7 @@ void mySliderWidget::onstateChanged(QMediaPlayer::State _state)
         ui->btnPlay->setIcon(QPixmap(":/images/play.png"));
 }
 
+
 void mySliderWidget::onDurationChanged(qint64 duration)
 {
     //文件时长变化
@@ -135,7 +192,7 @@ void mySliderWidget::onDurationChanged(qint64 duration)
     int   secs=duration/1000;//秒
     int   mins=secs/60; //分钟
     secs=secs % 60;//余数秒
-    durationTime =QString::asprintf("%d:%d",mins,secs);
+    durationTime = QString::asprintf("%d:%d",mins,secs);
     ui->LabRatio->setText(positionTime+"/"+durationTime);
 }
 
@@ -148,7 +205,7 @@ void mySliderWidget::onPositionChanged(qint64 position)
     int   secs=position/1000;//秒
     int   mins=secs/60; //分钟
     secs=secs % 60;//余数秒
-    positionTime=QString::asprintf("%d:%d",mins,secs);
+    positionTime = QString::asprintf("%d:%d",mins,secs);
     ui->LabRatio->setText(positionTime+"/"+durationTime);
 }
 //qt会自动调用
@@ -366,7 +423,6 @@ void mySliderWidget::onSwitcnNextSong()
             ui->LabCurMedia->setText(item->text());
    }
 }
-
 
 void mySliderWidget::on_btnPreviousSong_clicked()
 {

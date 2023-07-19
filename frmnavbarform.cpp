@@ -41,7 +41,7 @@ void frmNavBarForm::initForm()
     ui->navBar->setSpace(18);
     ui->navBar->setBarColorStart(QColor(24, 189, 155));
     ui->navBar->setBarColorEnd(QColor(24, 189, 155));
-    ui->navBar->setItems("冥想界面;用户操作;串口设置");
+    ui->navBar->setItems("冥想界面;用户操作;串口设置;主题选择");
     ui->navBar->setKeyMove(true);
     ui->navBar->setBgColorStart(QColor(46,60,82));
     ui->navBar->setBarColorEnd(QColor(68,47,81));

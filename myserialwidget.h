@@ -5,7 +5,6 @@
 #include <QSerialPort>
 #include "comservice.h"
 #include <QThread>
-#include "themeselection.h"
 
 namespace Ui {
 class MySerialWidget;

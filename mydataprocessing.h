@@ -58,8 +58,7 @@ public:
 
     /* 文本操作函数 */
     /* 把文件中列数据放入容器中 */
-//    void readColumnData(const QString &filename);
-    //
+
     void saveEegWaveToOutputFile(double & delta,double &theta,double &alpha,
                                  double &beta, double &gama,const QString & filename);
 
@@ -73,7 +72,8 @@ public:
     void eegDataProcess(const QString & input_filename,const QString & output_filename);
 
 signals:
-   void filteredDataReady(QVector<double>& data); // 滤波后的数据准备好的信号
+    // 滤波后的数据准备好的信号
+    void filteredDataReady(QVector<double>& data);
     //发送到主线程的信号
     void newData(char data);
 
@@ -86,16 +86,16 @@ private:
                       vectord &ccof_vec, vectord &dcof_vec);
 
 private:
-    char m_buf[650] = {0};                   // 存不同eeg数据
-    QByteArray       mBuffer;
-    QVector<double> buffer;                  // 保存滤波后的数据
-    QVector<double> m_originalDatas;         // 用来脑电波原始信号
-    QByteArray originalBuffer;
-    QVector<double> m_array_x;               // 画图的时候使用，array_x作为横坐标
-    ComService * serialwidget = nullptr;     //串口类
+    char                         m_buf[650] = {0};        // 存不同eeg数据
+    QByteArray                   mBuffer;
+    QVector<double>              buffer;                  // 保存滤波后的数据
+    QVector<double>              m_originalDatas;         // 用来脑电波原始信号
+    QByteArray                   originalBuffer;
+    QVector<double>              m_array_x;               // 画图的时候使用，array_x作为横坐标
+    ComService *                 serialwidget = nullptr;  //串口类
 //    QVector<double> DeltaVect,ThetaVect,AlphaVect,
-//                    BetaVect,GamaVect, OtherVect; // 不同波形数据容器
-    QVector<double> m_savearray;
+//                    BetaVect,GamaVect, OtherVect;       // 不同波形数据容器
+    QVector<double>             m_savearray;
     gsl_fft_complex_wavetable * wavetable =nullptr;
     gsl_fft_complex_workspace * workspace =nullptr;
 };

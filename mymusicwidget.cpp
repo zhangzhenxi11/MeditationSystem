@@ -39,6 +39,8 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
                 }
             });
     loadMedia("../FFTW/sound_lib/music");
+    playMode = QMediaPlaylist::Loop;
+    playlist->setPlaybackMode(playMode);
     //分支功能测试 dev
 
     //分支功能：图片旋转优化开发完毕
@@ -164,8 +166,8 @@ void MyMusicWidget::onDurationChanged(qint64 duration)
 {
     //文件时长变化，更新进度显示
     ui->Position->setMaximum(duration);
-    int   secs=duration/1000;//秒
-    int   mins=secs/60; //分钟
+    int secs=duration/1000;//秒
+    int mins=secs/60; //分钟
     secs=secs % 60;//余数秒
     durationTime=QString::asprintf("%d:%d",mins,secs);
     ui->LabRatio->setText(positionTime+"/"+durationTime);
@@ -178,8 +180,8 @@ void MyMusicWidget::onPositionChanged(qint64 position)
         return;
     ui->Position->setSliderPosition(position);//
     qInfo()<< position;
-    int   secs=position/1000;//秒
-    int   mins=secs/60; //分钟
+    int secs=position/1000;//秒
+    int mins=secs/60; //分钟
     secs=secs % 60;//余数秒
     positionTime=QString::asprintf("%d:%d",mins,secs);
     ui->LabRatio->setText(positionTime+"/"+durationTime);
@@ -241,8 +243,6 @@ void MyMusicWidget::on_sliderVolumn_valueChanged(int value)
 
 void MyMusicWidget::on_btnMode_clicked()
 {
-    ui->btnMode->style()->unpolish(ui->btnMode);
-    ui->btnMode->style()->polish(ui->btnMode);
     if(m_IsMode%4==0)//循环
     {
         playlist->setPlaybackMode(QMediaPlaylist::Loop);
@@ -263,12 +263,7 @@ void MyMusicWidget::on_btnMode_clicked()
         playlist->setPlaybackMode(QMediaPlaylist::Random);
         ui->btnMode->setStyleSheet("border-image: url(:/images/suiji.png);");
     }
-    //手动更新样式
-    ui->btnMode->style()->unpolish(ui->btnMode);	//清理之前的样式
-    ui->btnMode->style()->polish(ui->btnMode);		//用于添加新的样式
-    ui->btnMode->update();
     m_IsMode++;
-
 }
 
 void MyMusicWidget::needleAnimationDynamic()

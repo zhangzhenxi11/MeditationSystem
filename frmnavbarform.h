@@ -31,8 +31,6 @@ private:
     QWidget* m_musicWidet = nullptr ;     //新插入的页面1
     QWidget* m_videoWidegt = nullptr;
     QHBoxLayout * m_LayoutMain = nullptr ;//主页面布局
-//    ThemeSelection * mtheme = nullptr;     //主题界面
-
 
 private slots:
 	void initForm();

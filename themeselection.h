@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QLabel>
 #include <QFile>
+#include <imageview.h>
+#include <QPainterPath>
 
 namespace Ui {
 class ThemeSelection;
@@ -15,19 +17,29 @@ class ThemeSelection : public QWidget
 
 public:
     explicit ThemeSelection(QWidget *parent = nullptr);
-    void onbtnMusic();
-    void onbtnSerial();
-    void onStart();
+    void initUiForm();  //加载资源文件
     ~ThemeSelection();
 
-signals:
-    void emitCurrentItem(int index);
-
 private slots:
-    void initForm();
+    void on_btnSky_clicked();
+
+    void on_btnNoise_clicked();
+
+    void on_btnSlient_clicked();
+
+    void on_btnPre_clicked();
+
+    void on_btnNext_clicked();
+
+    void on_btnPlay_clicked();
 
 private:
-    Ui::ThemeSelection *ui;
+    Ui::ThemeSelection *     ui;
+    QString                  m_styleSheet;
+    QString                  m_themeName;
+    int                      m_SourceNum;
+    QString                  m_strFolder;
+
 };
 
 #endif // THEMESELECTION_H

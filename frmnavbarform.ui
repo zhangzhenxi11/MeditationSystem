@@ -91,6 +91,7 @@
      <widget class="MySerialWidget" name="wSerialSet">
       <layout class="QVBoxLayout" name="verticalLayout_5"/>
      </widget>
+     <widget class="ThemeSelection" name="wTheme"/>
     </widget>
    </item>
   </layout>
@@ -111,7 +112,13 @@
   <customwidget>
    <class>MyCustomPlotWidget</class>
    <extends>QWidget</extends>
-   <header location="global">mycustomplotwidget.h</header>
+   <header>mycustomplotwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ThemeSelection</class>
+   <extends>QWidget</extends>
+   <header>themeselection.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

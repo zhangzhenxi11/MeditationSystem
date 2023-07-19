@@ -106,7 +106,7 @@ void ComService::ReceviceSerialData()
                 // 发送数据至GUI
                 emit emitNewData(mBuffer);
             }
-        } 
+        }
         QThread::msleep(500); //线程休眠100ms
     }
 }
