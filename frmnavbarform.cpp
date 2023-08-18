@@ -4,7 +4,8 @@
 #include "qdebug.h"
 #include "mysliderwidget.h"
 #include "mymusicwidget.h"
-#include <QTimer>
+#include "LhuierMusicDefine.h"
+#include <QFile>
 
 frmNavBarForm::frmNavBarForm(QWidget *parent) : QWidget(parent),
     ui(new Ui::frmNavBarForm)
@@ -23,6 +24,18 @@ void frmNavBarForm::showEvent(QShowEvent *)
     QTimer::singleShot(100, this, SLOT(setIndex()));
 }
 
+void frmNavBarForm::closeEvent(QCloseEvent *event)
+{
+    QFile file(CUSTOMPLOT_SOURCEFILE_PATH);
+    file.open(QFile::WriteOnly|QFile::Truncate);
+    file.close();
+    QFile outfile(QApplication::applicationDirPath()+ CUSTOMPLOT_OUTFILE_PATH);
+    outfile.open(QFile::WriteOnly|QFile::Truncate);
+    outfile.close();
+    event->accept();
+}
+
+
 void frmNavBarForm::receiveData(int index)
 {
     if(index == 0)
@@ -33,6 +46,7 @@ void frmNavBarForm::receiveData(int index)
 
 void frmNavBarForm::initForm()
 {
+
     //设置圆角
     this->setWindowTitle("冥想系统");
     ui->navBar->setBgRadius(5);
@@ -60,16 +74,49 @@ void frmNavBarForm::initForm()
     ui->tabWidget->insertTab(1,m_videoWidegt,"冥想视频");
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->addWidget(ui->tabWidget);
-    ui->tabWidget->resize(1200, 1500);
+    ui->tabWidget->resize(width(), height());
     ui->wMain->setLayout(gridLayout);
-    ui->wMain->resize(1000, 1000);
+    ui->wMain->resize(width(), height());
     setIndex();//默认第一个界面
+    //设置子界面垂直布局
+//    m_musicWidet->adjustSize();
+//    m_videoWidegt->adjustSize();
+//    ui->wSerialSet->adjustSize();
+//    ui->wMain->adjustSize();
+//    QVBoxLayout *subLayout1 = new QVBoxLayout(m_musicWidet);
+//    QVBoxLayout *subLayout2 = new QVBoxLayout(m_videoWidegt);
+
 }
 
 void frmNavBarForm::currentItemChanged(int index, const QString &item)
 {
     ui->stackedWidget->setCurrentIndex(index);
     qDebug() << "index" << index << "item" << item;
+
+
+    /* QStackedWidget实现自适应紧凑布局
+    每个子窗口里加一个垂直布局，将原本的子窗口内容作为一个content_widget放到新加的布局里。
+    在显示当前页面时，隐藏其他页面的content_widget即可
+    */
+
+    // 经测试，隐藏page是不行的，需要隐藏page里面的content_widget
+//    int page_count = ui->stackedWidget->count();
+//    for (int i = 0; i < page_count; i++)
+//    {
+//        QWidget *page = ui->stackedWidget->widget(i);
+//        QObjectList objects = page->children();
+//        for (int j = 0; j < objects.size(); j++)
+//        {
+//            QWidget *content_widget = qobject_cast<QWidget *>(objects.at(j));
+//            if (content_widget)
+//            {
+//                content_widget->setVisible(i == index);
+//                break; // 这里只是跳出当前页的for循环
+//            }
+//        }
+//    }
+
+
 }
 
 void frmNavBarForm::setIndex()

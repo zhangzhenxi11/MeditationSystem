@@ -8,7 +8,8 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 /*
- * 此类只提供video的组件，实际视频功能myslidewidget中。
+ * 此类只提供video的组件，
+ * 实际视频功能myslidewidget中。
 */
 
 namespace Ui {
@@ -24,8 +25,11 @@ private:
 
 public:
     explicit MyVideoWidget(QWidget *parent = nullptr);
-    static MyVideoWidget* getInstance();
+
+    static  MyVideoWidget* getInstance();
+
     void    setMediaPlayer(QMediaPlayer *player);
+
     ~MyVideoWidget();
 
 private:

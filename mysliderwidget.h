@@ -2,9 +2,9 @@
 #define MYSLIDERWIDGET_H
 
 #include <QWidget>
-#include <QPropertyAnimation> //动画类
-#include <QParallelAnimationGroup>//动画组类
-#include <QStackedWidget>//用于存储多个界面
+#include <QPropertyAnimation>      //动画类
+#include <QParallelAnimationGroup> //动画组类
+#include <QStackedWidget>          //用于存储多个界面
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -24,6 +24,7 @@
 #include "myvideowidget.h"
 #include "sdk/flatui.h"
 #include <QProcess>
+
 // ffmpeg 音视频库
 extern "C"{
 #include "libavcodec/avcodec.h"
@@ -48,13 +49,15 @@ class mySliderWidget : public QWidget
     Q_OBJECT
 
 public:
+
     explicit mySliderWidget(QWidget *parent = nullptr);
 
-    void loadMedia(const QString& videoFilePath,const QString & audioFilePath);              /* 从指定路径中加载文件 */
-
-    void initForm();                                      /* 初始化界面 */
-
-    static mySliderWidget* GetKernel();                   /* 单例接口 */
+    /*合并音频和视频，并加载进列表中*/
+    void loadMedia(const QString& videoFilePath,const QString & audioFilePath);
+    /* 初始化界面 */
+    void initForm();
+    /* 单例接口 */
+    static mySliderWidget* GetKernel();
 
     ~mySliderWidget();
 
@@ -70,13 +73,13 @@ protected slots:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 
-    void switchToNextVideo();//切换下一个视频
+    void switchToNextVideo();     //切换下一个视频
 
     void switchToPreviousVideo(); //切换上一个视频
 
-    void switchToVideo(int index);//切换视频
+    void switchToVideo(int index); //切换视频
 
-    void animateVideoLabel();//动画
+    void animateVideoLabel();      //动画
 
     void onSwitcnPreSong();
 
@@ -99,35 +102,35 @@ private slots:
     void on_btnNextSong_clicked();
 
 private:
-    Ui::mySliderWidget  *               ui;
-    static mySliderWidget  *            m_instance;
-    QMediaPlayer  *                     mVideoPlayer;        //视频播放器
-    QMediaPlaylist  *                   playlist;            //播放列表
-    QMediaPlayer::State                 state;               //播放器状态
-    QMediaPlaylist::PlaybackMode        playMode;            //播放器模式
-    int                                 m_IsMode = 0;        //判断播放模式   0单曲1循环2单曲循环3随机播放
-    QStringList                         m_fileList;          //视频文件列表
-    QStringList                         m_videoNameList;     //视频文件名列表
-    QMap<QString,QString>               m_videoCombinaAudio; //视频音频文件地址绑定
-    QString                             durationTime;        //进度间隔
-    QString                             positionTime;        //进度位置
-    QStackedWidget  *                   m_ptrStackWidget;    //分页stacke
-    MyVideoWidget   *                   m_videoWidegt;
-    QHBoxLayout     *                   m_ptrLayoutMain;
-    QPushButton     *                   m_ptrBtnPre;
-    QPushButton     *                   m_ptrBtnNext;
-    int                                 m_windowWidth ;
-    int                                 m_windowHieght;
-    QMap<int, MyVideoWidget*>           m_indexToWidget;     //组件和视频绑定
-    int                                 m_rowNo;             //行号
-    int                                 m_videoNums =3;
-    bool                                m_bDonghua = false;
-    int                                 m_flagPreOrNext=0;   //0:👈划 1：👉划
-    int                                 m_currentIndex = 0;
-    int                                 m_currentVideoIndex=0;//video索引
-    QPropertyAnimation *                m_manimation;         //动画
-    bool                                mousePressed = false;
-    QPoint                              mousePos;             //鼠标位置点
+    Ui::mySliderWidget  *         ui;
+    static mySliderWidget  *      m_instance;
+    QMediaPlayer  *               mVideoPlayer;        //视频播放器
+    QMediaPlaylist  *             playlist;            //播放列表
+    QMediaPlayer::State           state;               //播放器状态
+    QMediaPlaylist::PlaybackMode  playMode;            //播放器模式
+    int                           m_IsMode = 0;        //判断播放模式   0单曲1循环2单曲循环3随机播放
+    QStringList                   m_fileList;          //视频文件列表
+    QStringList                   m_videoNameList;     //视频文件名列表
+    QMap<QString,QString>         m_videoCombinaAudio; //视频音频文件地址绑定
+    QString                       durationTime;        //进度间隔
+    QString                       positionTime;        //进度位置
+    QStackedWidget  *             m_ptrStackWidget;    //分页stacke
+    MyVideoWidget   *             m_videoWidegt;
+    QHBoxLayout     *             m_ptrLayoutMain;
+    QPushButton     *             m_ptrBtnPre;
+    QPushButton     *             m_ptrBtnNext;
+    int                           m_windowWidth ;
+    int                           m_windowHieght;
+    QMap<int, MyVideoWidget*>     m_indexToWidget;     //组件和视频绑定
+    int                           m_rowNo;             //行号
+    int                           m_videoNums =3;
+    bool                          m_bDonghua = false;
+    int                           m_flagPreOrNext=0;   //0:👈划 1：👉划
+    int                           m_currentIndex = 0;
+    int                           m_currentVideoIndex=0;//video索引
+    QPropertyAnimation *          m_manimation;         //动画
+    bool                          mousePressed = false;
+    QPoint                        mousePos;             //鼠标位置点
 };
 
 

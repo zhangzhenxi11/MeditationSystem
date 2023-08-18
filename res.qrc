@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/file">
-        <file>relax/attention_read_1_fyf.txt</file>
         <file>relax/rawData.txt</file>
     </qresource>
 </RCC>

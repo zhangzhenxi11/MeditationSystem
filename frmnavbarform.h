@@ -23,6 +23,7 @@ public:
 
 protected:
     void showEvent(QShowEvent *);
+    void closeEvent(QCloseEvent*event);
 
 public slots:
     void receiveData(int index);

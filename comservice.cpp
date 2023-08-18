@@ -1,7 +1,7 @@
 ﻿
 #include "comservice.h"
 #include <QDebug>
-
+#include <QMessageBox>
 ComService::ComService(QObject *parent)
     : QObject{parent}
 {
@@ -95,17 +95,25 @@ void ComService::ReceviceSerialData()
     bool islittle = isLittleEndian();//本机是小端
     if(islittle)
     {
-        //校验头字节
-        if(mBuffer.at(0) == 0x41 && mBuffer.at(1) == 0x41)
+        if(!mBuffer.isEmpty())
         {
-            if(mBuffer.at(6) == 0x69 && mBuffer.at(7) == 0x69)
+            //校验头字节
+            if(mBuffer.at(0) == 0x41 && mBuffer.at(1) == 0x41)
             {
-                mResult = (mBuffer.at(2) << 24) | (mBuffer.at(3) << 16) | mBuffer.at(4)<<8| mBuffer.at(5);
-                mBuffer = QByteArray::number(mResult);//10进制数
-                emitNewIntData(mBuffer.toInt());
-                // 发送数据至GUI
-                emit emitNewData(mBuffer);
+                if(mBuffer.at(6) == 0x69 && mBuffer.at(7) == 0x69)
+                {
+                    mResult = (mBuffer.at(2) << 24) | (mBuffer.at(3) << 16) | mBuffer.at(4)<<8| mBuffer.at(5);
+                    mBuffer = QByteArray::number(mResult);//10进制数
+                    emitNewIntData(mBuffer.toInt());
+                    // 发送数据至GUI
+                    emit emitNewData(mBuffer);
+                }
             }
+        }
+        else
+        {
+            qDebug()<< QString::fromLocal8Bit("mBuffer为空！");
+            return;
         }
         QThread::msleep(500); //线程休眠100ms
     }

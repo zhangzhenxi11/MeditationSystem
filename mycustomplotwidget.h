@@ -45,17 +45,18 @@ signals:
 public slots: //声明槽函数
     void realTimeDataSlot();
 
-    void newDataAvailable(int value);/* 接受串口数据的槽函数1 */
+    void newDataAvailable(int value);       /* 接受串口数据的槽函数1 */
 
-    void cusDataAvailable(char value);/* 接受串口数据的槽函数2 */
+    void cusDataAvailable(char value);      /* 接受串口数据的槽函数2 */
 
-    void onCutMainWindow();          /* 窗口切换的槽函数 */
+    void onCutMainWindow();                 /* 窗口切换的槽函数 */
 
     void upDatePlot(QVector<double>& data);/* 接受数据处理类的槽函数*/
 
-    void newSerialDatas(QByteArray data); /* 接受串口数据的槽函数3 */
+    void newSerialDatas(QByteArray data);  /* 接受串口数据的槽函数3 */
 
     void flagfunc(int status);
+
 
 private slots:
     void on_btnStart_clicked();
@@ -72,7 +73,7 @@ private:
     QList<QString>              m_lineNames;              //曲线名称
     QList<QString>              m_powerSpectrumLines;      //曲线名称
     double                      m_value;
-    MySerialWidget*             m_serialPlot = nullptr;   //串口类指针
+    MySerialWidget*             m_serialPlot = nullptr;     //串口类指针
     ComService*                 m_service = nullptr;
     MyDataProcessing*           m_dataprocessing = nullptr; //数据处理类
     QThread *                   m_customerThread ;
@@ -90,6 +91,9 @@ private:
 
     int m_status;                                           // 0:串口关闭，1：串口打开
     QRandomGenerator *          m_randInt;                  //随机
+    QString                     sourcefileName;
+    QString                     outputfileName;
+    QString                     outEdffile;
 
 };
 

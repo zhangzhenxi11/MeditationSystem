@@ -88,6 +88,8 @@ void mySliderWidget::mergeVideoWithAudio(const QString &videoFilePath, const QSt
 
 void mySliderWidget::initForm()
 {
+//    this->adjustSize();
+//    this->setFixedSize(width(),height());
     //初始化暂停键
     ui->btnPlay->setIcon(QPixmap(":/images/play.png"));
     this->setStyleSheet("background-color: rgb(147, 147, 147);");

@@ -6,72 +6,80 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>953</width>
-    <height>660</height>
+    <width>1048</width>
+    <height>754</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MyCustomPlotWidget</string>
   </property>
-  <widget class="QCustomPlot" name="customplot" native="true">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>50</y>
-     <width>741</width>
-     <height>261</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QCustomPlot" name="customplot_2" native="true">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>320</y>
-     <width>741</width>
-     <height>291</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnStart">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>10</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>开始</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnPause">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>10</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>暂停</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnStop">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>10</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>停止</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>操作区</string>
+         </property>
+         <widget class="QPushButton" name="btnStart">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>20</y>
+            <width>91</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>开始</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnPause">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>20</y>
+            <width>91</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>暂停</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnStop">
+          <property name="geometry">
+           <rect>
+            <x>720</x>
+            <y>20</y>
+            <width>91</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>停止</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QCustomPlot" name="customplot_2" native="true"/>
+        <widget class="QCustomPlot" name="customplot" native="true"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <customwidgets>
   <customwidget>

@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QRandomGenerator>
+#include "LhuierMusicDefine.h"
 
 MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
     : QWidget(parent)
@@ -13,22 +14,40 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
     ,m_randInt(new QRandomGenerator)
 {
     ui->setupUi(this);
+    qDebug()<<"MyCustomPlotWidget thread: "<< QThread::currentThread();
     //槽函数移到子线程
     m_service = ComService::GetKernel();
-    m_dataprocessing  = new MyDataProcessing;
+    m_dataprocessing = MyDataProcessing::GetKernel();
+//    m_dataprocessing  = new MyDataProcessing;
     m_customerThread = new QThread;
-    QString sourcefileName = "../FFTW/relax/rawData.txt";  //选择路径
-    QString outputfileName = QApplication::applicationDirPath()+ "/relax/out.txt";
+    sourcefileName = CUSTOMPLOT_SOURCEFILE_PATH;
+    outputfileName = QApplication::applicationDirPath()+ CUSTOMPLOT_OUTFILE_PATH;
+    outEdffile = QApplication::applicationDirPath() + CUSTOMPLOT_OUTEDFFILE_PATH;
 
     /* 数据处理类 */
     connect(this,&MyCustomPlotWidget::ToThread,m_dataprocessing,&MyDataProcessing::eegDataProcess);
-    /* 数据处理类移到多线程 */
+
+    /* 数据处理类移到子线程 */
     m_dataprocessing->moveToThread(m_customerThread);
-    /* m_timer 定时去发送信号,数据处理类执行算法*/
+//    bool isrunning = m_customerThread->isRunning();
+//    qDebug()<<"isrunning status: "<< isrunning << Qt::endl;
+
+    /*在主线程的构造函数中，事件循环还没有开始运行，因此信号无法被自动处理
+     需要主动触发事件循环才能让槽函数执行。
+    */
+    /*
+    * 方法1： m_timer 定时去发送信号,数据处理类执行算法
+    */
     connect(m_timer,&QTimer::timeout,this,[=]()
     {
-      emit ToThread(sourcefileName,outputfileName);
+      //emit ToThread(sourcefileName,outputfileName);
+      emit ToThread(sourcefileName,outEdffile); //传edf格式文件名
     });
+    /*
+    方法2：
+     通过调用QCoreApplication::processEvents()或者QEventLoop::exec()来手动触发事件循环，从而使信号被及时处理.
+    */
+
     /* 原始eeg信号绘图 */
     m_lineNames<<"Line1";
     /* 初始化图表 */
@@ -41,8 +60,10 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
 
     m_timerDynamic = new QTimer;
     m_powerSpectrumLines<<"delta"<<"theta"<<"alpha"<<"beta"<<"gama";
+
     /* 初始化图表 */
     drawDynamic(ui->customplot_2,5,m_powerSpectrumLines);
+
     /* m_timerDynamic定时绘制功率谱图 */
     connect(m_timerDynamic,&QTimer::timeout,this,[=]()
    {
@@ -53,11 +74,15 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
 
 MyCustomPlotWidget::~MyCustomPlotWidget()
 {
+    if(m_serialPlot->mThread.isRunning()||m_customerThread->isRunning())
+    {
+        m_serialPlot->mThread.wait();
+        m_serialPlot->mThread.quit();
+        m_customerThread->wait();
+        m_customerThread->quit();
+    }
     delete ui;
-    m_serialPlot->mThread.wait();
-    m_serialPlot->mThread.quit();
-    m_customerThread->wait();
-    m_customerThread->quit();
+    //关闭程序时，停止线程
 }
 
 void MyCustomPlotWidget::powerSpectrumDrawing()
@@ -68,6 +93,7 @@ void MyCustomPlotWidget::powerSpectrumDrawing()
        realTimeDataSlot();
     }
 }
+
 
 void MyCustomPlotWidget::drawDynamic(QCustomPlot * plot1, int plot_num, QList<QString> _idxList)
 {
@@ -307,30 +333,32 @@ void MyCustomPlotWidget::newSerialDatas(QByteArray data)
 void MyCustomPlotWidget::flagfunc(int status)
 {
     m_status = status;
-//    m_flag = status;
-//    if(m_flag == 0)
-//    {
-//        if(m_customerThread->isRunning())
-//        {
-//            m_timer->stop();
-//            m_timerDynamic->stop();
-//            m_customerThread->terminate();
-//            qDebug()<<"关闭customerThread线程！";
-//        }
-//    }
-//    else
-//    {
-//        if(m_serialPlot->mThread.isRunning())
-//        {
-//            m_timer->start(500);
-//            m_timerDynamic->start(20);
-//            m_customerThread->start();
-//        }
-//    }
+/*
+    m_flag = status;
+    if(m_flag == 0)
+    {
+        if(m_customerThread->isRunning())
+        {
+            m_timer->stop();
+            m_timerDynamic->stop();
+            m_customerThread->terminate();
+            qDebug()<<"关闭customerThread线程！";
+        }
+    }
+    else
+    {
+        if(m_serialPlot->mThread.isRunning())
+        {
+            m_timer->start(500);
+            m_timerDynamic->start(20);
+            m_customerThread->start();
+        }
+    }
+
+*/
 
 }
 
-/* */
 void MyCustomPlotWidget::on_btnStart_clicked()
 {
     if(m_flag == 0 || m_status == 0)
@@ -351,9 +379,6 @@ void MyCustomPlotWidget::on_btnPause_clicked()
     {
         m_timer->stop(); //主线程停止发信号,断开数据处理类函数
         m_timerDynamic->stop();//绘图停止
-//        m_customerThread->quit();
-//        m_customerThread->wait();//阻塞当前线程直到新线程执行完毕，这里是主线程被阻塞，画面卡顿,加一个进度条
-        qDebug()<<"关闭customerThread线程！";
     }
     m_flag = 0;
 
@@ -361,15 +386,13 @@ void MyCustomPlotWidget::on_btnPause_clicked()
 
 void MyCustomPlotWidget::on_btnStop_clicked()
 {
-
-//    m_customerThread->wait();
-//    //工作线程完成后，析构
-//    connect(m_customerThread,&QThread::finished,m_dataprocessing,&QObject::deleteLater);
-//    m_customerThread->quit(); //请求线程退出事件循环
-//    if(m_customerThread->isRunning())
-//    {
-//       m_customerThread->terminate();
-//    }
+    m_customerThread->exit();
+    m_customerThread->wait();//阻塞当前线程直到新线程执行完毕，这里是主线程被阻塞，画面卡顿,加一个进度条
+    if(m_customerThread->isRunning())
+    {
+       m_customerThread->terminate();//强制关闭线程
+    }
+    qDebug()<<"关闭customerThread线程！";
 
 }
 

@@ -1,9 +1,9 @@
 QT       += core gui
-
+QT       += concurrent
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport serialport multimedia  multimediawidgets
 
+CONFIG += c++11
 CONFIG += c++17
-
 CONFIG += resources_big
 
 # eigen数学库
@@ -23,6 +23,7 @@ LIBS += -L$$PWD/lib/ffmpeg/lib -lavcodec -lavdevice -lavfilter -lavformat -lavut
 SOURCES += \
     bandpassfilter.cpp \
     comservice.cpp \
+    edflib.c \
     flatui.cpp \
     frmnavbarform.cpp \
     imageview.cpp \
@@ -43,9 +44,11 @@ SOURCES += \
 
 
 HEADERS += \
+    LhuierMusicDefine.h \
     LowPassFilter.h \
     bandpassfilter.h \
     comservice.h \
+    edflib.h \
     flatui.h \
     frmnavbarform.h \
     imageview.h \
@@ -86,8 +89,7 @@ QMAKE_CXXFLAGS += "-Wa,-mbig-obj"
 RESOURCES += \
     Qss.qrc \
     Resource.qrc \
-    images.qrc \
-    res.qrc
+    images.qrc
 
 RC_FILE = myico.rc
 

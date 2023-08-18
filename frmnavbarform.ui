@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1185</width>
-    <height>733</height>
+    <width>1261</width>
+    <height>773</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,7 +72,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="wMain">
       <layout class="QVBoxLayout" name="verticalLayout">
