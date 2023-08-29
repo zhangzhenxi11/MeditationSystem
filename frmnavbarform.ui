@@ -72,19 +72,12 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="wMain">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <widget class="MyMusicWidget" name="wMusic">
+      <layout class="QVBoxLayout" name="verticalLayout"/>
      </widget>
+     <widget class="mySliderWidget" name="wVideo"/>
      <widget class="MyCustomPlotWidget" name="wUser">
       <layout class="QVBoxLayout" name="verticalLayout_2"/>
      </widget>
@@ -119,6 +112,18 @@
    <class>ThemeSelection</class>
    <extends>QWidget</extends>
    <header>themeselection.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyMusicWidget</class>
+   <extends>QWidget</extends>
+   <header>mymusicwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mySliderWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">mysliderwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

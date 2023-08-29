@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QMouseEvent>
 /*
  * 此类只提供video的组件，
  * 实际视频功能myslidewidget中。
@@ -23,6 +24,8 @@ class MyVideoWidget : public QVideoWidget
 private:
     QMediaPlayer    *m_player;//视频播放器
 
+protected:
+    void keyPressEvent(QKeyEvent*event);
 public:
     explicit MyVideoWidget(QWidget *parent = nullptr);
 
@@ -37,5 +40,4 @@ private:
     static MyVideoWidget* m_Instance;//类指针
 
 };
-
 #endif // MYVIDEOWIDGET_H

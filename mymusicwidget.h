@@ -35,20 +35,7 @@ public:
     ~MyMusicWidget();
 
 public:
-    void initAction();
-    inline QString MenuStyle();
-    inline QString PlayStyle();
-    inline QString PaseStyle();
-    inline QString IlikeStyle();
-    inline QString Ilike1Style();
-    inline QString ShowListStyle();
-    inline QString HideListStyle();
-    inline QString RandomStyle();
-    inline QString LoopStyle();
-    inline QString LoopOneStyle();
-    inline QString VoiceStyle();
-    inline QString NoVoiceStyle();
-    inline QString MusicListStyle();
+    QString MenuStyle();
 signals:
     void timeout();
 
@@ -77,14 +64,9 @@ private slots:
 
     void needleAnimationDynamic();
 
-    void on_btnMusic_clicked();
-
-    void on_btnRepeat_clicked();
-
 public slots:
     /*接受关注度数值的信号槽函数*/
     void reciveAttention(double attenDataValue);
-
 
 private:
     Ui::MyMusicWidget *ui;

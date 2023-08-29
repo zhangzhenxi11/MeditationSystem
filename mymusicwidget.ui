@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1221</width>
-    <height>676</height>
+    <width>1224</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,143 +17,146 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame#frame
-{
-	border-radius:5px;
-	border-image: url(:/images/background/bg3.jpg);
-}
-
-image: url(:/images/background/bg3.jpg);</string>
+   <string notr="true"/>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>10</y>
-     <width>321</width>
-     <height>41</height>
+     <width>1201</width>
+     <height>721</height>
     </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLabel" name="lblIndex">
-      <property name="text">
-       <string>序号</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QLabel" name="lblSong">
-      <property name="text">
-       <string>歌曲</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>278</width>
-        <height>13</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QLabel" name="lblSinger">
-      <property name="text">
-       <string>歌手</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QLabel" name="lblProuce">
-      <property name="text">
-       <string>专辑</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QListWidget" name="listWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>120</y>
-     <width>321</width>
-     <height>481</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblRecord">
-   <property name="geometry">
-    <rect>
-     <x>520</x>
-     <y>180</y>
-     <width>191</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>1</string>
-   </property>
-  </widget>
-  <widget class="RotatingLabel" name="lblneedle">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>190</y>
-     <width>71</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>2</string>
-   </property>
-  </widget>
-  <widget class="QSlider" name="verticalSlider">
-   <property name="geometry">
-    <rect>
-     <x>1150</x>
-     <y>420</y>
-     <width>35</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true"> QSlider 
+    <string notr="true">QFrame#frame{
+border-radius:5px;
+border-image: url(:/images/background/bg3.jpg);
+}
+</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>321</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="lblIndex_2">
+       <property name="text">
+        <string>序号</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblSong_2">
+       <property name="text">
+        <string>歌曲</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>278</width>
+         <height>13</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblSinger_2">
+       <property name="text">
+        <string>歌手</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblProuce_2">
+       <property name="text">
+        <string>专辑</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>120</y>
+      <width>321</width>
+      <height>481</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="RotatingLabel" name="lblneedle">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>200</y>
+      <width>71</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="verticalSlider">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>430</y>
+      <width>35</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> QSlider 
     {  
         background-color: rgba(255,255,255,0.2);
         min-width:5px; 
@@ -184,28 +187,296 @@ image: url(:/images/background/bg3.jpg);</string>
  margin: -0 -4px; 
 	border-image: url(:/image/image/圆形 (10).png);
      }</string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-   <property name="tickPosition">
-    <enum>QSlider::NoTicks</enum>
-   </property>
-  </widget>
-  <widget class="QSlider" name="horizontalSlider">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>620</y>
-     <width>581</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <property name="tickPosition">
+     <enum>QSlider::NoTicks</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LabCurMedia">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>590</y>
+      <width>341</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>无曲目</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRecord">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>190</y>
+      <width>191</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnList">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>80</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+
+{
+background-image: url(:/images/image/list.png);
+background-repeat:no-repeat;
+background-position:center center;
+border:none;
+
+}
+
+
+QPushButton:hover{
+background-image: url(:/images/image-hover/list-hover.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+
+}
+QPushButton:pressed{
+background-image: url(:/images/image/list.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnRepeat">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>80</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+background-repeat:no-repeat;
+background-position:center center;
+border:none;
+
+}
+
+QPushButton:hover{
+background-repeat:no-repeat;
+background-position:center center;
+
+
+}
+QPushButton:pressed{
+background-repeat:no-repeat;
+background-position:center center;
+
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>620</y>
+      <width>351</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btnPrevious">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>48</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>前一曲目</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+background-image:  url(:/images/image/pre.png);
+background-repeat:no-repeat;
+background-position:center center;
+border:none;
+
+}
+
+QPushButton:hover
+{
+background-image:url(:/images/image-hover/pre-hover.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+
+}
+QPushButton:pressed{
+background-image:  url(:/images/image/pre.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/images/616.bmp</normaloff>:/images/images/616.bmp</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPlay">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>暂停</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/images/622.bmp</normaloff>:/images/images/622.bmp</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnNext">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>0</y>
+       <width>48</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>下一曲目</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+background-image:  url(:/images/image/next.png);
+background-repeat:no-repeat;
+background-position:center center;
+border:none;
+
+}
+
+QPushButton:hover
+{
+background-image:url(:/images/image-hover/next-hover.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+
+}
+QPushButton:pressed{
+background-image:  url(:/images/image/next.png);
+background-repeat:no-repeat;
+background-position:center center;
+
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/images/630.bmp</normaloff>:/images/images/630.bmp</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnMode">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>10</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>暂停</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/images/622.bmp</normaloff>:/images/images/622.bmp</iconset>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>630</y>
+      <width>761</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QSlider" name="horizontalSlider">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
     QSlider::add-page:Horizontal
      {     
 background-color: rgba(255, 255, 255,100);
@@ -231,423 +502,44 @@ background-color: rgb(255, 255, 255);
     }
       
 </string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="LabRatio">
-   <property name="geometry">
-    <rect>
-     <x>1030</x>
-     <y>610</y>
-     <width>80</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>80</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>进度</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnPlay">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>620</y>
-     <width>31</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>暂停</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/622.bmp</normaloff>:/images/images/622.bmp</iconset>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnNext">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>610</y>
-     <width>48</width>
-     <height>48</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>下一曲目</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-image:  url(:/images/image/next.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-}
-
-QPushButton:hover
-{
-background-image:url(:/images/image-hover/next-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-image:  url(:/images/image/next.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/630.bmp</normaloff>:/images/images/630.bmp</iconset>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnMode">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>620</y>
-     <width>41</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>暂停</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/622.bmp</normaloff>:/images/images/622.bmp</iconset>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnPrevious">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>610</y>
-     <width>48</width>
-     <height>48</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>前一曲目</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-image:  url(:/images/image/pre.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-}
-
-QPushButton:hover
-{
-background-image:url(:/images/image-hover/pre-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-image:  url(:/images/image/pre.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/616.bmp</normaloff>:/images/images/616.bmp</iconset>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnSound">
-   <property name="geometry">
-    <rect>
-     <x>1150</x>
-     <y>620</y>
-     <width>28</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">image: url(:/images/volumn.bmp);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/images/images/volumn.bmp</normaloff>:/images/images/volumn.bmp</iconset>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="LabCurMedia">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>580</y>
-     <width>341</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>无曲目</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnMusic">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>80</y>
-     <width>32</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-image: url(:/images/image/music.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-
-}
-
-QPushButton:hover{
-background-image: url(:/images/image-hover/music-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-image: url(:/images/image/music.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnResently">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>80</y>
-     <width>32</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="toolTip">
-    <string>最近播放</string>
-   </property>
-   <property name="statusTip">
-    <string>最近播放</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-image: url(:/images/image/play-resently.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-
-}
-
-
-QPushButton:hover{
-
-background-image: url(:/images/image-hover/play-resently-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-	background-image: url(:/images/image/play-resently.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnList">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>80</y>
-     <width>31</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-
-{
-background-image: url(:/images/image/list.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-}
-
-
-QPushButton:hover{
-background-image: url(:/images/image-hover/list-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-image: url(:/images/image/list.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnLike">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>80</y>
-     <width>32</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-image: url(:/images/image/like.png);
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-}
-
-
-QPushButton:hover{
-
-background-image: url(:/images/image-hover/like-hover.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-image: url(:/images/image/like.png);
-background-repeat:no-repeat;
-background-position:center center;
-
-}
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnRepeat">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>80</y>
-     <width>32</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton
-{
-background-repeat:no-repeat;
-background-position:center center;
-border:none;
-
-}
-
-QPushButton:hover{
-background-repeat:no-repeat;
-background-position:center center;
-
-
-}
-QPushButton:pressed{
-background-repeat:no-repeat;
-background-position:center center;
-
-}
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="LabRatio">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>进度</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSound">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/images/volumn.bmp);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/images/images/volumn.bmp</normaloff>:/images/images/volumn.bmp</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

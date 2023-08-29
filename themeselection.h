@@ -27,12 +27,6 @@ private slots:
 
     void on_btnSlient_clicked();
 
-    void on_btnPre_clicked();
-
-    void on_btnNext_clicked();
-
-    void on_btnPlay_clicked();
-
 private:
     Ui::ThemeSelection *     ui;
     QString                  m_styleSheet;

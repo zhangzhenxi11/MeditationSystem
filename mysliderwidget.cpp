@@ -2,10 +2,11 @@
 #include "ui_mysliderwidget.h"
 #include <QCollator>
 
+
 mySliderWidget::mySliderWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::mySliderWidget)
-    ,m_ptrLayoutMain(new QHBoxLayout(this))
+    ui(new Ui::mySliderWidget),
+    m_ptrLayoutMain(new QHBoxLayout(this))
 {
     ui->setupUi(this);
     m_ptrStackWidget = new QStackedWidget;
@@ -15,7 +16,7 @@ mySliderWidget::mySliderWidget(QWidget *parent) :
 
     this->initForm();
     loadMedia("../FFTW/sound_lib/mp4", "../FFTW/sound_lib/mp3");
-
+//    ui->listWidget->setGeometry(QRect(830,400,251,321));
 }
 
 void mySliderWidget::loadMedia(const QString& videoFilePath,const QString & audioFilePath)
@@ -88,15 +89,13 @@ void mySliderWidget::mergeVideoWithAudio(const QString &videoFilePath, const QSt
 
 void mySliderWidget::initForm()
 {
-//    this->adjustSize();
-//    this->setFixedSize(width(),height());
     //初始化暂停键
-    ui->btnPlay->setIcon(QPixmap(":/images/play.png"));
+    ui->btnPlay->setIcon(QPixmap(":/images/image/play.png"));
     this->setStyleSheet("background-color: rgb(147, 147, 147);");
     //按钮背景透明圆形有图案
     FlatUI::Instance()->setSliderQss(ui->sliderPosition);
     FlatUI::Instance()->setSliderQss(ui->sliderVolumn);
-    for (int var = 0; var < m_videoNums; ++var)
+    for (int var = 0; var < VIDEONUMS; ++var)
     {
         m_videoWidegt = new MyVideoWidget;
         m_videoWidegt->setProperty("id",QVariant::fromValue(var));
@@ -105,23 +104,27 @@ void mySliderWidget::initForm()
     }
     m_windowWidth = m_ptrStackWidget->widget(m_currentIndex)->width();
     m_windowHieght = m_ptrStackWidget->widget(m_currentIndex)->height();
+
     m_ptrStackWidget->installEventFilter(this);
     m_ptrStackWidget->setMouseTracking(true);
     m_ptrStackWidget->setCurrentIndex(m_currentIndex);
-    m_ptrStackWidget->setFixedSize(500, 500);
+    m_ptrStackWidget->setFixedSize(ui->groupBox->width(), ui->groupBox->height());
     m_ptrLayoutMain->addWidget(m_ptrStackWidget);//布局中加控件
     ui->groupBox->setLayout(m_ptrLayoutMain);//将布局添加进QGroupBox中。
     ui->btnSound->setStyleSheet("border-image: url(:/images/volumn.bmp);");
 
-    //播放器
+    /* 播放器 */
     mVideoPlayer = new QMediaPlayer(this);//创建视频播放器
     playlist = new QMediaPlaylist(this);
     mVideoPlayer->setNotifyInterval(2000);//信息更新周期
     playMode = QMediaPlaylist::Loop;
+
     m_videoWidegt = qobject_cast<MyVideoWidget*>(m_indexToWidget.first());//当前组件
     mVideoPlayer->setVideoOutput(m_videoWidegt);//视频显示组件
     m_videoWidegt->setMediaPlayer(mVideoPlayer);//设置显示组件的关联播放器
+    m_videoWidegt->resize(ui->groupBox->width(), ui->groupBox->height());//设置视频组件尺寸
     playlist->setPlaybackMode(playMode);//默认歌曲列表循环
+
     mVideoPlayer->setPlaylist(playlist);
     connect(mVideoPlayer,SIGNAL(stateChanged(QMediaPlayer::State)),
             this, SLOT(onstateChanged(QMediaPlayer::State)));
@@ -143,8 +146,6 @@ void mySliderWidget::initForm()
                     mVideoPlayer->play();
                 }
             });
-
-
 //    mVideoPlayer->stop();
 }
 
@@ -179,11 +180,16 @@ void mySliderWidget::onstateChanged(QMediaPlayer::State _state)
     //切换按钮的icon
     state = _state;
     ui->btnPlay->setEnabled(true);//保持使能状态
-    if(state==QMediaPlayer::PlayingState)
-        ui->btnPlay->setIcon(QPixmap(":/images/pause.png"));
-
-    else if(state==QMediaPlayer::PausedState)
-        ui->btnPlay->setIcon(QPixmap(":/images/play.png"));
+    if(state == QMediaPlayer::PlayingState)
+    {
+        ui->btnPlay->setIcon(QPixmap(":/images/image/play.png"));
+        ui->btnPlay->setToolTip("暂停");
+    }
+    else if(state == QMediaPlayer::PausedState)
+    {
+        ui->btnPlay->setIcon(QPixmap(":/images/image/pase.png"));
+        ui->btnPlay->setToolTip("播放");
+    }
 }
 
 
@@ -386,7 +392,7 @@ void mySliderWidget::onSwitcnNextSong()
    int windowWidth = m_ptrStackWidget->widget(currentIndex)->width();
    int windowHieght = m_ptrStackWidget->widget(currentIndex)->height();
    int NextIndex = currentIndex + 1;
-   if(NextIndex<= m_videoNums)
+   if(NextIndex<= VIDEONUMS)
    {
        //显示组件切换
        m_videoWidegt = qobject_cast<MyVideoWidget*>(m_indexToWidget[NextIndex]);//下一个组件
@@ -436,4 +442,6 @@ void mySliderWidget::on_btnNextSong_clicked()
 {
     playlist->next();
 }
+
+
 

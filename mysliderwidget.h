@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPropertyAnimation>      //动画类
 #include <QParallelAnimationGroup> //动画组类
+#include <QSequentialAnimationGroup>
 #include <QStackedWidget>          //用于存储多个界面
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -22,6 +23,7 @@
 #include <QAudioEncoderSettings>    // 音频编码器设置对象
 #include <QProcess>
 #include "myvideowidget.h"
+#include "qlistwidget.h"
 #include "sdk/flatui.h"
 #include <QProcess>
 
@@ -39,7 +41,7 @@ extern "C"{
 4、屏蔽点原视频音乐，播放自定音乐
 5、程序自动加载音乐
 */
-
+#define VIDEONUMS  3
 namespace Ui {
 class mySliderWidget;
 }
@@ -101,6 +103,7 @@ private slots:
 
     void on_btnNextSong_clicked();
 
+
 private:
     Ui::mySliderWidget  *         ui;
     static mySliderWidget  *      m_instance;
@@ -123,7 +126,6 @@ private:
     int                           m_windowHieght;
     QMap<int, MyVideoWidget*>     m_indexToWidget;     //组件和视频绑定
     int                           m_rowNo;             //行号
-    int                           m_videoNums =3;
     bool                          m_bDonghua = false;
     int                           m_flagPreOrNext=0;   //0:👈划 1：👉划
     int                           m_currentIndex = 0;

@@ -25,6 +25,7 @@ void MyDataProcessing::saveEegWaveToOutputFile(double &delta, double &theta, dou
 {
     double meditation = 100 * (alpha)/(alpha + theta + 0.000000001); /* 冥想度 */
     m_attention       = 100 - meditation;                            /* 关注度 */
+    emit dynamicAttentionData(m_attention); //发送关注度数值
     snprintf(m_buf,650,
             "%-30.7f  %-30.7f  %-30.7f  %-30.7f  %-30.7f  \n",
             delta,
@@ -430,7 +431,7 @@ void MyDataProcessing::eegDataProcess(const QString &input_filename, const QStri
                 m_originalDatas.clear();//清除缓存,才开启下个循环
                 //保存到文件中
                 saveEegWaveToOutputFile(m_Delta,m_Theta,m_Alpha,m_Beta,m_Gama, output_filename);
-                saveEegWaveToEdfFile(m_Delta,m_Theta,m_Alpha,m_Beta,m_Gama, output_filename);
+                //saveEegWaveToEdfFile(m_Delta,m_Theta,m_Alpha,m_Beta,m_Gama, output_filename);
                 gsl_fft_complex_wavetable_free (wavetable);
                 gsl_fft_complex_workspace_free (workspace);
 

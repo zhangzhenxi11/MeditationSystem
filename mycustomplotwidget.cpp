@@ -22,7 +22,7 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
     m_customerThread = new QThread;
     sourcefileName = CUSTOMPLOT_SOURCEFILE_PATH;
     outputfileName = QApplication::applicationDirPath()+ CUSTOMPLOT_OUTFILE_PATH;
-    outEdffile = QApplication::applicationDirPath() + CUSTOMPLOT_OUTEDFFILE_PATH;
+    outEdffile     = QApplication::applicationDirPath() + CUSTOMPLOT_OUTEDFFILE_PATH;
 
     /* 数据处理类 */
     connect(this,&MyCustomPlotWidget::ToThread,m_dataprocessing,&MyDataProcessing::eegDataProcess);
@@ -40,8 +40,8 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
     */
     connect(m_timer,&QTimer::timeout,this,[=]()
     {
-      //emit ToThread(sourcefileName,outputfileName);
-      emit ToThread(sourcefileName,outEdffile); //传edf格式文件名
+      emit ToThread(sourcefileName,outputfileName);
+      //emit ToThread(sourcefileName,outEdffile); //传edf格式文件名
     });
     /*
     方法2：

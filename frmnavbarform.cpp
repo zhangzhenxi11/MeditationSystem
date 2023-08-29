@@ -46,7 +46,6 @@ void frmNavBarForm::receiveData(int index)
 
 void frmNavBarForm::initForm()
 {
-
     //设置圆角
     this->setWindowTitle("冥想系统");
     ui->navBar->setBgRadius(5);
@@ -55,14 +54,17 @@ void frmNavBarForm::initForm()
     ui->navBar->setSpace(18);
     ui->navBar->setBarColorStart(QColor(24, 189, 155));
     ui->navBar->setBarColorEnd(QColor(24, 189, 155));
-    ui->navBar->setItems("冥想界面;用户操作;串口设置;主题选择");
+    ui->navBar->setItems("冥想音乐;冥想视频;用户操作;串口设置;主题选择");
     ui->navBar->setKeyMove(true);
     ui->navBar->setBgColorStart(QColor(46,60,82));
     ui->navBar->setBarColorEnd(QColor(68,47,81));
     connect(ui->navBar, SIGNAL(currentItemChanged(int, QString)), this, SLOT(currentItemChanged(int, QString)));
+
+#if 0
     //实例化其他界面
     ui->stackedWidget->setMinimumSize(200,300);
     ui->stackedWidget->setMaximumSize(QSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX));
+
     //插入界面
     m_videoWidegt = mySliderWidget::GetKernel();
     m_musicWidet = MyMusicWidget::GetKernal();
@@ -75,8 +77,8 @@ void frmNavBarForm::initForm()
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->addWidget(ui->tabWidget);
     ui->tabWidget->resize(width(), height());
-    ui->wMain->setLayout(gridLayout);
-    ui->wMain->resize(width(), height());
+    ui->wMusic->setLayout(gridLayout);
+    ui->wMusic->resize(width(), height());
     setIndex();//默认第一个界面
     //设置子界面垂直布局
 //    m_musicWidet->adjustSize();
@@ -85,38 +87,13 @@ void frmNavBarForm::initForm()
 //    ui->wMain->adjustSize();
 //    QVBoxLayout *subLayout1 = new QVBoxLayout(m_musicWidet);
 //    QVBoxLayout *subLayout2 = new QVBoxLayout(m_videoWidegt);
-
+#endif
 }
 
 void frmNavBarForm::currentItemChanged(int index, const QString &item)
 {
     ui->stackedWidget->setCurrentIndex(index);
     qDebug() << "index" << index << "item" << item;
-
-
-    /* QStackedWidget实现自适应紧凑布局
-    每个子窗口里加一个垂直布局，将原本的子窗口内容作为一个content_widget放到新加的布局里。
-    在显示当前页面时，隐藏其他页面的content_widget即可
-    */
-
-    // 经测试，隐藏page是不行的，需要隐藏page里面的content_widget
-//    int page_count = ui->stackedWidget->count();
-//    for (int i = 0; i < page_count; i++)
-//    {
-//        QWidget *page = ui->stackedWidget->widget(i);
-//        QObjectList objects = page->children();
-//        for (int j = 0; j < objects.size(); j++)
-//        {
-//            QWidget *content_widget = qobject_cast<QWidget *>(objects.at(j));
-//            if (content_widget)
-//            {
-//                content_widget->setVisible(i == index);
-//                break; // 这里只是跳出当前页的for循环
-//            }
-//        }
-//    }
-
-
 }
 
 void frmNavBarForm::setIndex()

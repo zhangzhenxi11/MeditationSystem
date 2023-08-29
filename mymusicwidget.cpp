@@ -37,20 +37,11 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
             });
     dataProcessing = MyDataProcessing::GetKernel();
     //连接关注度槽函数  dataProcessing在子线程中,接收者在主线程
-   /*
-    QtConcurrent::run()函数的参数如下：
-        第一个参数是要执行的函数，可以是全局函数、静态成员函数或Lambda表达式。
-        后续的参数是要传递给执行函数的参数。
-    */
+
     synTimer = new QTimer();
     connect(synTimer,&QTimer::timeout,this,[=](){
-//        connect(dataProcessing,SIGNAL(dynamicAttentionData(double)),this,SLOT(reciveAttention(double)),Qt::QueuedConnection);
-    //    connect(dataProcessing,&MyDataProcessing::dynamicAttentionData,this,[=](){
-    //    QtConcurrent::run(std::bind(&MyMusicWidget::reciveAttention, MyMusicWidget::GetKernal()));
-    //    QtConcurrent::run(std::mem_fn(&MyMusicWidget::reciveAttention),MyMusicWidget::GetKernal());
-    //    });
+        connect(dataProcessing,SIGNAL(dynamicAttentionData(double)),this,SLOT(reciveAttention(double)),Qt::QueuedConnection);
     });
-
     synTimer->start(5000);
     loadMedia("../FFTW/sound_lib/music");
 //    playMode = QMediaPlaylist::Loop;
@@ -69,29 +60,6 @@ MyMusicWidget *MyMusicWidget::GetKernal()
 MyMusicWidget::~MyMusicWidget()
 {
     delete ui;
-}
-
-void MyMusicWidget::initAction()
-{
-    action5->setIcon(QIcon(":/images/pf.png"));
-    action5->setText(("设置皮肤"));
-    action5_1->setIcon(QIcon(":/images/pf2.png"));
-    action5_1->setText(("绿色"));
-    action5_2->setIcon(QIcon(":/images/pf5.png"));
-    action5_2->setText(("动漫"));
-    action5_4->setIcon(QIcon(":/images/pf.png"));
-    action5_4->setText(("蓝色"));
-    action5_3->setIcon(QIcon(":/images/pf4.png"));
-    action5_3->setText(("自定义"));
-    action5_3->setShortcut(QKeySequence("Ctrl+X"));
-    QMenu * ChangeBackGroundMenu = new QMenu(this);//设置皮肤菜单
-    ChangeBackGroundMenu->addAction(action5_1);
-    ChangeBackGroundMenu->addAction(action5_2);
-    ChangeBackGroundMenu->addAction(action5_4);
-    ChangeBackGroundMenu->addAction(action5_3);
-    ChangeBackGroundMenu->setStyleSheet(MenuStyle());
-    action5->setMenu(ChangeBackGroundMenu);
-    btn3->setMenu(ChangeBackGroundMenu);
 }
 
 QString MyMusicWidget::MenuStyle()
@@ -115,79 +83,20 @@ QString MyMusicWidget::MenuStyle()
         "}";
 }
 
-QString MyMusicWidget::PlayStyle()
-{
-
-}
-
-QString MyMusicWidget::PaseStyle()
-{
-
-}
-
-QString MyMusicWidget::IlikeStyle()
-{
-
-}
-
-QString MyMusicWidget::Ilike1Style()
-{
-
-}
-
-QString MyMusicWidget::ShowListStyle()
-{
-
-}
-
-QString MyMusicWidget::HideListStyle()
-{
-
-}
-
-QString MyMusicWidget::RandomStyle()
-{
-
-}
-
-QString MyMusicWidget::LoopStyle()
-{
-
-}
-
-QString MyMusicWidget::LoopOneStyle()
-{
-
-}
-
-QString MyMusicWidget::VoiceStyle()
-{
-
-}
-
-QString MyMusicWidget::NoVoiceStyle()
-{
-
-}
-
-QString MyMusicWidget::MusicListStyle()
-{
-
-}
-
 void MyMusicWidget::initForm()
 {
     //声音滑动条
 //    FlatUI::Instance()->setSliderQss(ui->Volumn);
 //    FlatUI::Instance()->setSliderQss(ui->Position);
+
     this->adjustSize();
     this->setFixedSize(width(),height());
     //初始化播放器模式
-    ui->btnMode->setStyleSheet("border-image: url(:/images/xunhuan.png);");
+    ui->btnMode->setStyleSheet("border-image: url(:/images/image/loop.png);");
     //初始化暂停键
     ui->btnPlay->setIcon(QPixmap(":/images/image/pase.png"));
     //整体页面背景
-    //  this->setStyleSheet("background-color: rgb(147, 147, 147);");
+//    this->setStyleSheet("background-color: rgb(147, 147, 147);");
     //唱片
     pix= new QPixmap(":/images/record.png");
     ui->lblRecord->setScaledContents(true);
@@ -204,55 +113,53 @@ void MyMusicWidget::initForm()
     // 设置唱片旋转的自定义Label的对齐方式和背景透明
     ui->lblneedle->setAlignment(ui->lblneedle->alignment());
     ui->lblneedle->setAttribute(Qt::WA_TranslucentBackground);
-    //自定义动画按钮
-    btn1 = new QPushButton(this);
-    btn2 = new QPushButton(this);
-    btn3 = new QPushButton(this);
-    btnPull = new QPushButton(this);
-    btnPull->setGeometry(width()-32,     0,32,32);
-    btn3->setGeometry(btnPull->x()- 32, -32, 32, 32);
-    btn2->setGeometry(btn3->x()- 32,    -32, 32, 32);
-    btn1->setGeometry(btn2->x()- 32,    -32, 32, 32);
+    /*音乐列表*/
+    ui->btnRepeat->setIcon(QIcon(":/images/image/left.png"));
+    ui->btnRepeat->setToolTip(("隐藏播放列表"));
+    QPropertyAnimation * AnimalBtnRepeat= new QPropertyAnimation(ui->btnRepeat,"geometry",this);
+    QPropertyAnimation * AnimalBtnList = new QPropertyAnimation(ui->btnList,"geometry",this);
+    QPropertyAnimation * AnimalListWidget = new QPropertyAnimation(ui->listWidget,"geometry",this);
 
-    auto anima1  =new QPropertyAnimation(btn1,"pos",this);
-    auto anima2  =new QPropertyAnimation(btn2,"pos",this);
-    auto anima3  =new QPropertyAnimation(btn3,"pos",this);
+    AnimalBtnRepeat->setStartValue(QRect(300,80,32,32));
+    AnimalBtnRepeat->setEndValue(QRect(40,80,32,32));
+    AnimalBtnRepeat->setDuration(500);
+    AnimalBtnRepeat->setEasingCurve(QEasingCurve::InBounce);
 
-    anima1->setStartValue(QPoint(btn1->x(),-32));
-    anima1->setEndValue(QPoint(btn1->x(),0));
-    anima1->setDuration(500);
-    anima1->setEasingCurve(QEasingCurve::Type::InOutBounce);
+    AnimalBtnList->setStartValue(QRect(240,80,31,31));
+    AnimalBtnList->setEndValue(QRect(10,80,31,31));
+    AnimalBtnList->setDuration(500);
+    AnimalBtnList->setEasingCurve(QEasingCurve::InBounce);
 
-    anima2->setStartValue(QPoint(btn2->x(),-32));
-    anima2->setEndValue(QPoint(btn2->x(),0));
-    anima2->setDuration(500);
-    anima2->setEasingCurve(QEasingCurve::Type::InOutBounce);
+    AnimalListWidget->setStartValue(QRect(1,120,321,481));
+    AnimalListWidget->setEndValue(QRect(-321,120,321,481));
+    AnimalListWidget->setDuration(500);
+    AnimalListWidget->setEasingCurve(QEasingCurve::InBounce);
 
-    anima3->setStartValue(QPoint(btn3->x(),-32));
-    anima3->setEndValue(QPoint(btn3->x(),0));
-    anima3->setDuration(500);
-    anima3->setEasingCurve(QEasingCurve::Type::InOutBounce);
+    AnimalBtnRepeat->start();
+    AnimalBtnList->start();
+    AnimalListWidget->start();
 
-    auto group = new QSequentialAnimationGroup(this);
-    group->addAnimation(anima1);
-    group->addAnimation(anima2);
-    group->addAnimation(anima3);
-    connect(btnPull, &QPushButton::clicked, this, [=]()
-            {
-                if (group->state() == QAbstractAnimation::State::Stopped &&
-                    group ->direction() == QAbstractAnimation::Direction::Forward &&
-                    btn3->y()>=0)
-                {
-                    group->setDirection(QAbstractAnimation::Direction::Backward);
-                }
-                else
-                {
-                    group->setDirection(QAbstractAnimation::Direction::Forward);
-                }
+    auto group1 = new QSequentialAnimationGroup(this);
+    group1->addAnimation(AnimalBtnList);
+    group1->addAnimation(AnimalBtnRepeat);
+    group1->addAnimation(AnimalListWidget);
 
-                group->start();
-            });
-
+    connect(ui->btnRepeat,&QPushButton::clicked,this,[=](){
+        if (group1->state() == QAbstractAnimation::State::Stopped &&
+            group1 ->direction() == QAbstractAnimation::Direction::Forward)
+        {
+            group1->setDirection(QAbstractAnimation::Direction::Backward);
+            ui->btnRepeat->setIcon(QIcon(":/images/image/left.png"));
+            ui->btnRepeat->setToolTip(("隐藏播放列表"));
+        }
+        else
+        {
+            group1->setDirection(QAbstractAnimation::Direction::Forward);
+            ui->btnRepeat->setIcon(QIcon(":/images/image/right.png"));
+            ui->btnRepeat->setToolTip(("显示播放列表"));
+        }
+        group1->start();
+    });
 }
 
 void MyMusicWidget::loadMedia(const QString &filePath)
@@ -313,10 +220,16 @@ void MyMusicWidget::onStateChanged(QMediaPlayer::State _state)
     state = _state;
     ui->btnPlay->setEnabled(true);//保持使能状态
     if(state == QMediaPlayer::PlayingState)
-        ui->btnPlay->setIcon(QPixmap(":/images/622.bmp"));
-
+    {
+      ui->btnPlay->setIcon(QPixmap(":/images/image/play.png"));
+      ui->btnPlay->setToolTip("暂停");
+    }
     else if(state == QMediaPlayer::PausedState)
-        ui->btnPlay->setIcon(QPixmap(":/images/620.bmp"));
+    {
+      ui->btnPlay->setIcon(QPixmap(":/images/image/pase.png"));
+      ui->btnPlay->setToolTip("播放");
+    }
+
 }
 
 void MyMusicWidget::onPlaylistChanged(int position)
@@ -411,26 +324,21 @@ void MyMusicWidget::on_sliderVolumn_valueChanged(int value)
 
 void MyMusicWidget::on_btnMode_clicked()
 {
-    //改写成状态机
-    if(m_IsMode%4==0)//循环
+
+    if(m_IsMode%3==0)//循环
     {
         playlist->setPlaybackMode(QMediaPlaylist::Loop);
-        ui->btnMode->setStyleSheet("border-image: url(:/images/xunhuan.png);");
+        ui->btnMode->setStyleSheet("border-image: url(:/images/image/loop.png);");
     }
-    if(m_IsMode%4==1)//单曲
-    {
-        playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
-        ui->btnMode->setStyleSheet("border-image: url(:/images/danqu.png);");
-    }
-    if(m_IsMode%4==2)//单曲循环
+    if(m_IsMode%3==1)//单曲循环
     {
         playlist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
-        ui->btnMode->setStyleSheet("border-image: url(:/images/danquxunhuan.png);");
+        ui->btnMode->setStyleSheet("border-image: url(:/images/image/loop-one.png);");
     }
-    if(m_IsMode%4==3)//随机
+    if(m_IsMode%3==2)//随机
     {
         playlist->setPlaybackMode(QMediaPlaylist::Random);
-        ui->btnMode->setStyleSheet("border-image: url(:/images/suiji.png);");
+        ui->btnMode->setStyleSheet("border-image: url(:/images/image/play-random.png);");
     }
     m_IsMode++;
 }
@@ -453,24 +361,21 @@ void  MyMusicWidget::reciveAttention(double attenDataValue)
 {
     /*
      * 前提：
-     * 1.此函数在开启子线程中。
+     * 1.此函数可在子线程中。
      * 2.默认必须是顺序播放，不可随机模式。
     1. 把数值划分到[0-100]区间内方法，获取关注度的区间1-100,分区间[0-25],[25-50] [50-75],[75-100]
     2. 先让用户自己点一首音乐，在播放期间用缓冲区buffer缓存关注度值。
     3. 当前播放结束后,计算缓冲区平均值，调用数值缩放方法取整数，即是播放索引值，切换下一首音乐。
     4. 用互斥锁保护播放索引值,防止其他线程竞争资源。
     5. 当前播放的音乐结束，解锁，循环3~4步骤。
-    6. 注意： 开启多线程，让繁杂操作子线程做，不卡住主线程。
+    6. 开启多线程，让繁杂操作子线程做，不卡住主线程。
     */
-
-    //主线程中长期运行的循环调用QApplication::processEvents()，以使执行工作时图形用户界面可以保持响应
-//    QApplication::processEvents(QEventLoop::AllEvents, 1000);
     if(state == QMediaPlayer::State::PlayingState)//首先播放一首音乐
     {
         qDebug()<< "attenDataValue:"<< attenDataValue << Qt::endl;
         //获取音乐列表行数
         int countNum = playlist->mediaCount();
-        //数值缩放到音乐列表数区间[1-maxcount]
+        //数值缩放到音乐列表数区间[1~maxcount]
         double min_value = 1;
         double max_value = countNum;
         double scaled_value = (attenDataValue - min_value) / (max_value - min_value);
@@ -529,27 +434,8 @@ void  MyMusicWidget::reciveAttention(double attenDataValue)
                 QCoreApplication::processEvents(QEventLoop::AllEvents,100);
                 }
             }
-
 }
-
 
 MyMusicWidget*MyMusicWidget::Instance = nullptr;
 
-
-
-void MyMusicWidget::on_btnMusic_clicked()
-{
-
-}
-
-
-void MyMusicWidget::on_btnRepeat_clicked()
-{//隐藏音乐列表
-    ui->listWidget->setGeometry(30,120,321,481);
-    auto animal = new QPropertyAnimation(ui->listWidget,"pos",this);
-//    animal->setStartValue();
-
-
-
-}
 

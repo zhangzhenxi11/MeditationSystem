@@ -60,18 +60,5 @@ void ThemeSelection::on_btnSlient_clicked()
 }
 
 
-void ThemeSelection::on_btnPre_clicked()
-{
 
-}
-
-void ThemeSelection::on_btnNext_clicked()
-{
-
-}
-
-void ThemeSelection::on_btnPlay_clicked()
-{
-
-}
 
