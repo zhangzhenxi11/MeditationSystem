@@ -10,53 +10,49 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyCustomPlotWidget)
     , m_serialPlot(new MySerialWidget)
-    ,m_timer(new QTimer)
-    ,m_randInt(new QRandomGenerator)
+    , m_timer(new QTimer)
+    , m_randInt(new QRandomGenerator)
 {
     ui->setupUi(this);
-    qDebug()<<"MyCustomPlotWidget thread: "<< QThread::currentThread();
     //槽函数移到子线程
-    m_service = ComService::GetKernel();
+    m_service = SerialService::GetKernel();
     m_dataprocessing = MyDataProcessing::GetKernel();
-//    m_dataprocessing  = new MyDataProcessing;
     m_customerThread = new QThread;
-    sourcefileName = CUSTOMPLOT_SOURCEFILE_PATH;
-    outputfileName = QApplication::applicationDirPath()+ CUSTOMPLOT_OUTFILE_PATH;
-    outEdffile     = QApplication::applicationDirPath() + CUSTOMPLOT_OUTEDFFILE_PATH;
+    sourcefileName   = CUSTOMPLOT_SOURCEFILE_PATH;
+    outputfileName   = QApplication::applicationDirPath()+ CUSTOMPLOT_OUTFILE_PATH;
+    outEdffile       = QApplication::applicationDirPath() + CUSTOMPLOT_OUTEDFFILE_PATH;
 
+    qInfo()<< "MyCustomPlotWidget threadid: " << QThread::currentThreadId();
     /* 数据处理类 */
     connect(this,&MyCustomPlotWidget::ToThread,m_dataprocessing,&MyDataProcessing::eegDataProcess);
 
     /* 数据处理类移到子线程 */
     m_dataprocessing->moveToThread(m_customerThread);
-//    bool isrunning = m_customerThread->isRunning();
-//    qDebug()<<"isrunning status: "<< isrunning << Qt::endl;
 
     /*在主线程的构造函数中，事件循环还没有开始运行，因此信号无法被自动处理
      需要主动触发事件循环才能让槽函数执行。
-    */
-    /*
-    * 方法1： m_timer 定时去发送信号,数据处理类执行算法
+    * 方法1：
+    * m_timer 定时去发送信号,数据处理类执行算法
+    * 方法2：
+     通过调用QCoreApplication::processEvents()或者
+     QEventLoop::exec()来手动触发事件循环，从而使信号被及时处理.
     */
     connect(m_timer,&QTimer::timeout,this,[=]()
     {
       emit ToThread(sourcefileName,outputfileName);
       //emit ToThread(sourcefileName,outEdffile); //传edf格式文件名
     });
-    /*
-    方法2：
-     通过调用QCoreApplication::processEvents()或者QEventLoop::exec()来手动触发事件循环，从而使信号被及时处理.
-    */
-
     /* 原始eeg信号绘图 */
     m_lineNames<<"Line1";
+
     /* 初始化图表 */
     eegPlotsInit(ui->customplot);
+
     /* 原始eeg信号连接槽函数 */
-    connect(m_service,&ComService::emitNewIntData,this,&MyCustomPlotWidget::newDataAvailable);
+    connect(m_service,&SerialService::emitNewIntData,this,&MyCustomPlotWidget::newDataAvailable);
 
     /* 串口发送信号，控制显示功率谱是否显示 */
-    connect(m_service,&ComService::emitFlag,this,&MyCustomPlotWidget::flagfunc);
+    connect(m_service,&SerialService::emitFlag,this,&MyCustomPlotWidget::flagfunc);
 
     m_timerDynamic = new QTimer;
     m_powerSpectrumLines<<"delta"<<"theta"<<"alpha"<<"beta"<<"gama";
@@ -66,7 +62,7 @@ MyCustomPlotWidget::MyCustomPlotWidget(QWidget *parent)
 
     /* m_timerDynamic定时绘制功率谱图 */
     connect(m_timerDynamic,&QTimer::timeout,this,[=]()
-   {
+    {
       powerSpectrumDrawing();
     });
     connect(&(m_serialPlot->mThread),&QThread::finished,m_service,&QObject::deleteLater);
@@ -286,7 +282,6 @@ void MyCustomPlotWidget::newDataAvailable(int value)
         static double lastPointKey = 0;
         if (key_x-lastPointKey > 0.2)
         {
-
             m_plotSource->graph(0)->addData(key_x, m_value);
             lastPointKey = key_x;
         }
@@ -303,7 +298,6 @@ void MyCustomPlotWidget::newDataAvailable(int value)
         m_plotSource->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
         m_plotSource->replot();
     }
-
 }
 
 void MyCustomPlotWidget::cusDataAvailable(char value)

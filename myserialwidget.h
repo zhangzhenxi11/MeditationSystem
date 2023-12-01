@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSerialPort>
-#include "comservice.h"
+#include "SerialService.h"
 #include <QThread>
 
 namespace Ui {
@@ -21,25 +21,28 @@ public:
     void btnClearRec();
     void btnSwitch();
     void dataReceive(QByteArray data);
-
     void saveNewData(const QString& filename);
-
+    void startThreadRunning();
     ~MySerialWidget();
 
 signals:
-    void cutMainWindow();
+    void startThread();
+
+private:
+    void fillPortsInfo();
+
+private slots:
+    void baudRateChanged();
 
 public:
     QThread mThread;
+
 private:
-
     Ui::MySerialWidget *ui;
-
-    ComService * mComservice;
-
+    SerialService * mComservice = nullptr;
     QString mBufferStr;
+    qint32 m_baudRate;
 
-//    ThemeSelection        * m_theme = nullptr;
 };
 
 #endif // MYSERIALWIDGET_H

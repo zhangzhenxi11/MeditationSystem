@@ -133,7 +133,7 @@ border-image: url(:/images/background/bg3.jpg);
    <widget class="RotatingLabel" name="lblneedle">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>720</x>
       <y>200</y>
       <width>71</width>
       <height>131</height>

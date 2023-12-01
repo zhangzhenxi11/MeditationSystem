@@ -19,9 +19,19 @@ MyDataProcessing *MyDataProcessing::GetKernel()
         m_dataInstance= new MyDataProcessing();
     }
     return m_dataInstance;
+}
+
+void MyDataProcessing::DestoryKernel()
+{
+    if(m_dataInstance)
+    {
+        delete m_dataInstance;
+        m_dataInstance = nullptr;
+    }
 
 }
-void MyDataProcessing::saveEegWaveToOutputFile(double &delta, double &theta, double &alpha, double &beta, double &gama, const QString &filename)
+void MyDataProcessing::saveEegWaveToOutputFile(double &delta, double &theta, double &alpha,
+                                               double &beta, double &gama, const QString &filename)
 {
     double meditation = 100 * (alpha)/(alpha + theta + 0.000000001); /* 冥想度 */
     m_attention       = 100 - meditation;                            /* 关注度 */
@@ -44,7 +54,8 @@ void MyDataProcessing::saveEegWaveToOutputFile(double &delta, double &theta, dou
     file.close();
 }
 
-int MyDataProcessing::saveEegWaveToEdfFile(double &delta, double &theta, double &alpha, double &beta, double &gama, const QString &filename)
+int MyDataProcessing::saveEegWaveToEdfFile(double &delta, double &theta, double &alpha,
+                                           double &beta, double &gama, const QString &filename)
 {
     m_edfBuf[650];
     double meditation = 100 * (alpha)/(alpha + theta + 0.000000001); /* 冥想度 */
@@ -269,7 +280,8 @@ void MyDataProcessing::ReadDataToContainer(QString &filename)
     }
 }
 
-void MyDataProcessing::coeffBandPass(int n, double lowcut, double highcut, int fs, vectord &acof_vec, vectord &bcof_vec)
+void MyDataProcessing::coeffBandPass(int n, double lowcut, double highcut,
+                                     int fs, vectord &acof_vec, vectord &bcof_vec)
 {
     double nyq = 0.5 * fs;
     double f1f = lowcut / nyq;
@@ -302,7 +314,8 @@ void MyDataProcessing::coeffBandPass(int n, double lowcut, double highcut, int f
         acof_vec.push_back(acof[i]);
 }
 
-void MyDataProcessing::coffStopPass(int n, double lowcut, double highcut, int fs, vectord &ccof_vec, vectord &dcof_vec)
+void MyDataProcessing::coffStopPass(int n, double lowcut, double highcut,
+                                    int fs, vectord &ccof_vec, vectord &dcof_vec)
 {
     double nyq = 0.5 * fs;
     double f1f = lowcut / nyq;
@@ -337,11 +350,12 @@ void MyDataProcessing::coffStopPass(int n, double lowcut, double highcut, int fs
 
 void MyDataProcessing::eegDataProcess(const QString &input_filename, const QString & output_filename)
 {
+    qInfo()<< __FUNCTION__ << QThread::currentThreadId();
     //QFile
     QFile file(input_filename);
     double data[2*COUNTN];//数组2N的长度 一维的压缩数组
     double m_EegDataBuf;               //从原始脑电文件中读取每一行数据，保存在这个变量中。
-    double m_Temp  = 0.0f;              // 这个临时变量用于保存各个波段的值，双精度浮点型变量
+    double m_Temp  = 0.0f;             // 这个临时变量用于保存各个波段的值，双精度浮点型变量
     double m_Delta = 0.0;              // 0~4HZ
     double m_Theta = 0.0;              // 4~8HZ
     double m_Alpha = 0.0;              // 8~12HZ
@@ -366,7 +380,7 @@ void MyDataProcessing::eegDataProcess(const QString &input_filename, const QStri
                 //已经取满256行，开始准备做FFT运算
                 for(int i = 0; i < COUNTN; i++)
                 {
-                    REAL(data,i)= m_originalDatas[i]; //z[2i]        z[0]  z[2]
+                    REAL(data,i)= m_originalDatas[i]; //z[2i]       z[0]  z[2]
                     IMAG(data,i) = 0.0;              //z[2i+1]      z[1]  z[3]
                     m_array_x.append(i);
                 }

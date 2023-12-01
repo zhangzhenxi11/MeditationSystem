@@ -9,7 +9,7 @@
 #include <QThread>
 #include "MySerialWidget.h"
 #include "mydataprocessing.h"
-#include "comservice.h"
+#include "SerialService.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -67,14 +67,14 @@ private slots:
 
 private:
     Ui::MyCustomPlotWidget *ui;
-    QCustomPlot*                m_plot;                   //曲线指针
-    QCustomPlot*                m_plotSource;             //eeg原信号
-    QList<QString>              m_idxList;                //当前正在显示的曲线的编号
-    QList<QString>              m_lineNames;              //曲线名称
+    QCustomPlot*                m_plot;                    //曲线指针
+    QCustomPlot*                m_plotSource;              //eeg原信号
+    QList<QString>              m_idxList;                 //当前正在显示的曲线的编号
+    QList<QString>              m_lineNames;               //曲线名称
     QList<QString>              m_powerSpectrumLines;      //曲线名称
     double                      m_value;
     MySerialWidget*             m_serialPlot = nullptr;     //串口类指针
-    ComService*                 m_service = nullptr;
+    SerialService*              m_service;
     MyDataProcessing*           m_dataprocessing = nullptr; //数据处理类
     QThread *                   m_customerThread ;
     QTimer *                    m_timer;                    //数据处理定时器

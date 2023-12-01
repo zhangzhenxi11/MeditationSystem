@@ -2,7 +2,7 @@
 #define NAVBAR_H
 
 /**
- * 滑动导航条控件 作者:feiyangqingyun(QQ:517216493) 2016-10-8
+ * 滑动导航条控件
  * 1:可键盘按键上下移动元素功能
  * 2:支持窗体大小改变控件自动拉伸
  * 3:支持移动到第一个/末一个/上移/下移/移动到指定索引/移动到指定元素
@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <QPainterPath>
+#include <QIcon>
 
 #ifdef quc
 #if (QT_VERSION < QT_VERSION_CHECK(5,7,0))

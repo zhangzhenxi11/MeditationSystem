@@ -58,8 +58,6 @@ public:
     void loadMedia(const QString& videoFilePath,const QString & audioFilePath);
     /* 初始化界面 */
     void initForm();
-    /* 单例接口 */
-    static mySliderWidget* GetKernel();
 
     ~mySliderWidget();
 
@@ -106,7 +104,6 @@ private slots:
 
 private:
     Ui::mySliderWidget  *         ui;
-    static mySliderWidget  *      m_instance;
     QMediaPlayer  *               mVideoPlayer;        //视频播放器
     QMediaPlaylist  *             playlist;            //播放列表
     QMediaPlayer::State           state;               //播放器状态

@@ -3,8 +3,6 @@
 #include "myvideowidget.h"
 #include "ui_myvideowidget.h"
 
-MyVideoWidget *MyVideoWidget::m_Instance=nullptr;
-
 void MyVideoWidget::keyPressEvent(QKeyEvent *event)
 {//按键事件，ESC退出全屏状态
     if((event->key() == Qt::Key_Escape)&&(isFullScreen()))
@@ -22,15 +20,6 @@ MyVideoWidget::MyVideoWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MyVideoWidget *MyVideoWidget::getInstance()
-{
-    if(m_Instance==nullptr)
-    {
-        m_Instance=new  MyVideoWidget();
-    }
-    return m_Instance;
-
-}
 
 void MyVideoWidget::setMediaPlayer(QMediaPlayer *player)
 {

@@ -20,7 +20,6 @@ public:
     explicit frmNavBarForm(QWidget *parent = 0);
     ~frmNavBarForm();
 
-
 protected:
     void showEvent(QShowEvent *);
     void closeEvent(QCloseEvent*event);

@@ -21,8 +21,8 @@ LIBS += -L$$PWD/lib/ffmpeg/lib -lavcodec -lavdevice -lavfilter -lavformat -lavut
 
 
 SOURCES += \
+    SerialService.cpp \
     bandpassfilter.cpp \
-    comservice.cpp \
     edflib.c \
     flatui.cpp \
     frmnavbarform.cpp \
@@ -46,8 +46,8 @@ SOURCES += \
 HEADERS += \
     LhuierMusicDefine.h \
     LowPassFilter.h \
+    SerialService.h \
     bandpassfilter.h \
-    comservice.h \
     edflib.h \
     flatui.h \
     frmnavbarform.h \

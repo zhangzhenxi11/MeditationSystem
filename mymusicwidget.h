@@ -29,7 +29,6 @@ class MyMusicWidget : public QWidget
 
 public:
     explicit MyMusicWidget(QWidget *parent = nullptr);
-    static MyMusicWidget* GetKernal();
     void initForm();                            /*初始化界面*/
     void loadMedia(const QString& filePath);    /*从指定路径中加载文件*/
     ~MyMusicWidget();
@@ -70,7 +69,6 @@ public slots:
 
 private:
     Ui::MyMusicWidget *ui;
-    static MyMusicWidget*         Instance;                //单例类指针
     MyDataProcessing*             dataProcessing = nullptr;//数据处理类
     QMediaPlayer*                 player;                  //播放器
     QMediaPlaylist*               playlist;                //播放列表控件 （Qt6弃用）

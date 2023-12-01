@@ -170,7 +170,7 @@
               <bool>false</bool>
              </property>
              <property name="currentText">
-              <string>8</string>
+              <string>5</string>
              </property>
              <property name="frame">
               <bool>true</bool>
@@ -313,6 +313,19 @@
       </property>
       <property name="text">
        <string>定时发送</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblStatus">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>171</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>

@@ -29,15 +29,12 @@ protected:
 public:
     explicit MyVideoWidget(QWidget *parent = nullptr);
 
-    static  MyVideoWidget* getInstance();
-
-    void    setMediaPlayer(QMediaPlayer *player);
+    void  setMediaPlayer(QMediaPlayer *player);
 
     ~MyVideoWidget();
 
 private:
     Ui::MyVideoWidget *ui;
-    static MyVideoWidget* m_Instance;//类指针
 
 };
 #endif // MYVIDEOWIDGET_H

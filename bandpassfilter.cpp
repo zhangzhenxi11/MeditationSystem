@@ -1,12 +1,23 @@
-
+﻿
 #include "bandpassfilter.h"
 
-BandpassFilter::BandpassFilter()
+BandPassFilter::BandPassFilter()
 {
 
 }
 
-void BandpassFilter::filter(const double *x, double *y, int xlen, double *a, double *b, int nfilt, double *zi)
+BandPassFilter::~BandPassFilter()
+{
+
+}
+
+/* SuGaomin 2020-08-29
+*
+* 没有析构函数，尽量避免让系统调用自身产生的析构函数
+* 虽然是空的，但是需要自己写一个。
+*/
+
+void BandPassFilter::filter(const double *x, double *y, int xlen, double *a, double *b, int nfilt, double *zi)
 {
     double tmp;
     int i,j;
@@ -36,7 +47,7 @@ void BandpassFilter::filter(const double *x, double *y, int xlen, double *a, dou
 
 }
 
-void BandpassFilter::trmul(double *a, double *b, double *c, int m, int n, int k)
+void BandPassFilter::trmul(double *a, double *b, double *c, int m, int n, int k)
 {
     int i,j,l,u;
     for (i=0; i<=m-1; i++)
@@ -52,7 +63,7 @@ void BandpassFilter::trmul(double *a, double *b, double *c, int m, int n, int k)
     } /* end of for loop */
 }
 
-int BandpassFilter::rinv(double *a, int n)
+int BandPassFilter::rinv(double *a, int n)
 {
     int *is,*js,i,j,k,l,u,v;
     double d,p;
@@ -179,7 +190,7 @@ int BandpassFilter::rinv(double *a, int n)
     return(0);
 }
 
-int BandpassFilter::filtfilt(double *x, double *y, int xlen, double *a, double *b, int nfilt)
+int BandPassFilter::filtfilt(double *x, double *y, int xlen, double *a, double *b, int nfilt)
 {
     int nfact;
     int tlen;    //length of tx
@@ -318,7 +329,7 @@ int BandpassFilter::filtfilt(double *x, double *y, int xlen, double *a, double *
 
 }
 
-void BandpassFilter::eeg_data_proc_task(double(*arr_raw_data)[256])
+void BandPassFilter::eeg_data_proc_task(double(*arr_raw_data)[256])
 {
     /* 切比雪夫滤波器阶数估计，该估计值由Matlab实现 */
     double B[RANK_OF_CHEBY_FILT] = {0.00033185,
@@ -356,7 +367,11 @@ MyBandPassFilter::~MyBandPassFilter()
 
 }
 
-QVector<double> MyBandPassFilter::bandpass_filter(QVector<double> &signal, double f1, double f2, double fs, int num_taps)
+/* SuGaomin 2020-08-29
+*
+* 成员函数，命名方式统一一下
+*/
+QVector<double> MyBandPassFilter::bandPassFilter(QVector<double> &signal, double f1, double f2, double fs, int num_taps)
 {
     n= signal.size();
     // 计算滤波器系数
@@ -367,7 +382,7 @@ QVector<double> MyBandPassFilter::bandpass_filter(QVector<double> &signal, doubl
         double freq = (double)i / num_taps * fs;
         if (freq >= f1 && freq <= f2)
         {
-            h[i] = 2 * (f2 - f1) / fs * cos(2 * PI * (f1 + f2) / 2 / fs * (i - (num_taps - 1) / 2.0)) / PI;
+            h[i] = 2 * (f2 - f1) / fs * cos(2 * M_PI * (f1 + f2) / 2 / fs * (i - (num_taps - 1) / 2.0)) / M_PI;
         }
         else
         {
@@ -393,11 +408,6 @@ QVector<double> MyBandPassFilter::bandpass_filter(QVector<double> &signal, doubl
             }
         }
         filtered_signal[i] = sum;
-
-        // 将滤波后的信号复制回原信号
-//        for (int i = 0; i < n; i++) {
-//            signal[i] = filtered_signal[i];
-//        }
     }
     return filtered_signal;
 

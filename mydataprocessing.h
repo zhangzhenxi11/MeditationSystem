@@ -26,14 +26,13 @@
 #include <Eigen/Dense>          //Eigen数值运算库
 #include <windows.h>
 #include <QApplication>
-#include "comservice.h"
 #include "./myfilter/myfilter.h"
 
 
 /*
  * @brief  对数据处理的类
- * 1. * 子线程1：读取buffer(还做不到)
- * 对来自串口256个数据用buffer存储，每组数据接完，就刷新buffer再进行algo算法处理。
+ * 1. * 子线程1：读取buffer
+ * 对来自串口的256个数据用buffer存储，每组数据接完，就刷新buffer再进行algo算法处理。
  *
  * 2. 子线程2：读取buffer,保存到文本中。
  * 实时接受串口数据保存到文本中，每256行数据去做FFT算法，得到功率谱数据。
@@ -57,8 +56,10 @@ public:
     explicit MyDataProcessing(QObject *parent = nullptr);
     ~MyDataProcessing();
 
-    /*单例*/
+    /*获取单例*/
     static MyDataProcessing*GetKernel();
+
+    static void DestoryKernel();
 
     /* 文本操作函数 */
 
@@ -79,8 +80,6 @@ public:
 
     //fft算法
     void eegDataProcess(const QString & input_filename,const QString & output_filename);
-
-
 
 signals:
     // 滤波后的数据准备好的信号
@@ -107,7 +106,6 @@ private:
     QVector<double>              m_originalDatas;         // 用来脑电波原始信号
     QByteArray                   originalBuffer;
     QVector<double>              m_array_x;               // 画图的时候使用，array_x作为横坐标
-    ComService *                 serialwidget = nullptr;  //串口类
     QVector<double>              m_savearray;
     double                       m_attention;              //关注值
     gsl_fft_complex_wavetable *  wavetable =nullptr;

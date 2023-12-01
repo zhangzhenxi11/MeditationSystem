@@ -37,25 +37,14 @@ MyMusicWidget::MyMusicWidget(QWidget *parent) :
             });
     dataProcessing = MyDataProcessing::GetKernel();
     //连接关注度槽函数  dataProcessing在子线程中,接收者在主线程
-
     synTimer = new QTimer();
     connect(synTimer,&QTimer::timeout,this,[=](){
         connect(dataProcessing,SIGNAL(dynamicAttentionData(double)),this,SLOT(reciveAttention(double)),Qt::QueuedConnection);
     });
     synTimer->start(5000);
     loadMedia("../FFTW/sound_lib/music");
-//    playMode = QMediaPlaylist::Loop;
-//    playlist->setPlaybackMode(playMode);
 }
 
-MyMusicWidget *MyMusicWidget::GetKernal()
-{
-    if(Instance==nullptr)
-    {
-      Instance =new MyMusicWidget;
-    }
-    return Instance;
-}
 
 MyMusicWidget::~MyMusicWidget()
 {
@@ -86,8 +75,8 @@ QString MyMusicWidget::MenuStyle()
 void MyMusicWidget::initForm()
 {
     //声音滑动条
-//    FlatUI::Instance()->setSliderQss(ui->Volumn);
-//    FlatUI::Instance()->setSliderQss(ui->Position);
+    //FlatUI::Instance()->setSliderQss(ui->Volumn);
+    //FlatUI::Instance()->setSliderQss(ui->Position);
 
     this->adjustSize();
     this->setFixedSize(width(),height());
@@ -97,22 +86,27 @@ void MyMusicWidget::initForm()
     ui->btnPlay->setIcon(QPixmap(":/images/image/pase.png"));
     //整体页面背景
 //    this->setStyleSheet("background-color: rgb(147, 147, 147);");
+
     //唱片
     pix= new QPixmap(":/images/record.png");
     ui->lblRecord->setScaledContents(true);
     ui->lblRecord->setPixmap(*pix);
+    //唱片旋转
+    transformPicutrue();
+
     //唱片指针图片
     picrneedle = new QPixmap(":/images/pipe0.png");
     ui->lblneedle->setPixmap(*picrneedle);
-    transformPicutrue();//旋转槽函数
+    //定时去旋转指针
     recordTimer=  new QTimer(this);
     recordRotation =0;
-    // 连接定时器的信号与槽函数
     connect(recordTimer,&QTimer::timeout,this,&MyMusicWidget::needleAnimationDynamic);
     recordTimer->start(100);
+
     // 设置唱片旋转的自定义Label的对齐方式和背景透明
     ui->lblneedle->setAlignment(ui->lblneedle->alignment());
     ui->lblneedle->setAttribute(Qt::WA_TranslucentBackground);
+
     /*音乐列表*/
     ui->btnRepeat->setIcon(QIcon(":/images/image/left.png"));
     ui->btnRepeat->setToolTip(("隐藏播放列表"));
@@ -165,11 +159,11 @@ void MyMusicWidget::initForm()
 void MyMusicWidget::loadMedia(const QString &filePath)
 {
     QDir dir(filePath);
-    QStringList filters;
-    filters << "*.mp3" << "*.wav";
-    QFileInfoList fileInfoList = dir.entryInfoList(QStringList()<<"*.mp3");
+    QFileInfoList fileInfoList = dir.entryInfoList(QStringList()<< "*.mp3" << "*.wav");
     if(fileInfoList.count()<=0)
-      return;
+    {
+        return;
+    }
     for (int i = 0; i < fileInfoList.count(); ++i)
     {
       QString filepath = fileInfoList.at(i).absoluteFilePath();
@@ -182,23 +176,16 @@ void MyMusicWidget::loadMedia(const QString &filePath)
 
 void MyMusicWidget::transformPicutrue()
 {
-    // 创建 QTimer
     timer = new QTimer;
-    // 每隔 10ms 就触发一次超时信号
-    timer->setInterval(10);//每隔10ms,去执行下面的方法：旋转图片一度。
-    // 记录当前旋转的角度
-    int currentAngle = 0;
+    timer->setInterval(10);//每隔10ms,旋转图片一度。
+    int currentAngle = 0;// 记录当前旋转的角度
     connect(timer, &QTimer::timeout, [&](){
-        // 每次旋转 1 度
-        currentAngle = (currentAngle + 1) % 360;
+        currentAngle = (currentAngle + 1) % 360;// 每次旋转 1 度
         QTransform transform;
-        // 将旋转的中心点设置为图片的中心
-        transform.translate(pix->width()/2, pix->height()/2);
+        //transform.translate(pix->width()/2, pix->height()/2);// 平移
         transform.rotate(currentAngle);
-        transform.translate(-pix->width()/2, -pix->height()/2);
-        // 将变换应用到 QPixmap 上，并更新 QLabel
-        ui->lblRecord->setPixmap(pix->transformed(transform, Qt::FastTransformation));
-
+        //transform.translate(-pix->width()/2, -pix->height()/2);
+        ui->lblRecord->setPixmap(pix->transformed(transform, Qt::FastTransformation));// 将变换应用到 QPixmap 上，并更新 QLabel
         if(state == QMediaPlayer::StoppedState)
         {
             m_bPlay = false;
@@ -229,7 +216,6 @@ void MyMusicWidget::onStateChanged(QMediaPlayer::State _state)
       ui->btnPlay->setIcon(QPixmap(":/images/image/pase.png"));
       ui->btnPlay->setToolTip("播放");
     }
-
 }
 
 void MyMusicWidget::onPlaylistChanged(int position)
@@ -257,8 +243,12 @@ void MyMusicWidget::onPositionChanged(qint64 position)
 {
     //当前文件播放位置变化，更新进度显示
     MusicPostion = position;
+    /*
     if (ui->horizontalSlider->isSliderDown())
+    {
         return;
+    }
+    */
     ui->horizontalSlider->setSliderPosition(MusicPostion);//
     qInfo()<< MusicPostion;
     int secs = MusicPostion/1000;//秒
@@ -297,10 +287,14 @@ void MyMusicWidget::on_btnPlay_clicked()
             }
         }
         else if(m_currentIndex<0)
+        {
             QMessageBox::information(this,"提示","请选中歌曲",QMessageBox::Button::Ok|QMessageBox::Button::Ignore);
+        }
     }
     else
+    {
         QMessageBox::information(this,"提示","请添加歌曲",QMessageBox::Button::Ok|QMessageBox::Button::Ignore);
+    }
 
 }
 
@@ -324,7 +318,6 @@ void MyMusicWidget::on_sliderVolumn_valueChanged(int value)
 
 void MyMusicWidget::on_btnMode_clicked()
 {
-
     if(m_IsMode%3==0)//循环
     {
         playlist->setPlaybackMode(QMediaPlaylist::Loop);
@@ -364,7 +357,7 @@ void  MyMusicWidget::reciveAttention(double attenDataValue)
      * 1.此函数可在子线程中。
      * 2.默认必须是顺序播放，不可随机模式。
     1. 把数值划分到[0-100]区间内方法，获取关注度的区间1-100,分区间[0-25],[25-50] [50-75],[75-100]
-    2. 先让用户自己点一首音乐，在播放期间用缓冲区buffer缓存关注度值。
+    2. 先让用户点一首音乐，在播放期间用缓冲区buffer缓存关注度值。
     3. 当前播放结束后,计算缓冲区平均值，调用数值缩放方法取整数，即是播放索引值，切换下一首音乐。
     4. 用互斥锁保护播放索引值,防止其他线程竞争资源。
     5. 当前播放的音乐结束，解锁，循环3~4步骤。
@@ -435,7 +428,5 @@ void  MyMusicWidget::reciveAttention(double attenDataValue)
                 }
             }
 }
-
-MyMusicWidget*MyMusicWidget::Instance = nullptr;
 
 

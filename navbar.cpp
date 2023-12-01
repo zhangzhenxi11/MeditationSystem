@@ -537,6 +537,7 @@ void NavBar::setFlat(bool flat)
     }
 }
 
+
 void NavBar::moveFirst()
 {
     int index = 0;

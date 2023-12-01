@@ -30,12 +30,23 @@
 //传统滤波（如Matlab的filter函数）会造成信号的延迟，延迟程度与滤波器的阶次有关，
 //为了解决延迟问题，Matlab提供了filtfilt函数，该方法一般称为零相位滤波或双向滤波。
 
-const double PI = 3.14159265358979323846;
+/* SuGaomin 2020-08-29
+ *
+ * 第一，double变量占8个字节，一般后面保留15位小数，你这个小数后面太长了
+ * 第二，double类型的数，在小数后面需要加上一个d或者D，
+ *      float类型后面的数，需要加一个f
+ *      long 类型的，需要加一个L
+ * 第三，这个PI应该是个常量，在系统里面是有的，不需要自己额外的定义。
+ *
+ * 可能你这个代码是之前拷贝我的。我的代码里面是当时在C环境下运行的。我的环境下是没有的，所以需要我自己定义。
+*/
 
-class BandpassFilter
+
+class BandPassFilter
 {
 public:
-    BandpassFilter();
+    BandPassFilter();
+    ~BandPassFilter();
 
     // filter滤波器函数，最终被filtfilt 调用
     void filter(const double* x,
@@ -83,9 +94,7 @@ public:
     //用于处理采集到的脑电数据
     void eeg_data_proc_task(double(*arr_raw_data)[256]); // double arr[250]
 
-//    void eeg_data_proc_task1(double(*arr)[250]);
-
-public:
+private:
     /* 滤波及一阶差分后的脑电数据 */
     double   eeg_raw_data[EEG_ALL_DATA_SIZE] =  {0.0}; //input array
     double   filt_eeg_data[EEG_ALL_DATA_SIZE] = {0.0};
@@ -121,7 +130,7 @@ public:
 * @date          2023-05-16
 **********************************************/
 
-QVector<double> bandpass_filter(QVector<double>& signal, double f1, double f2, double fs, int num_taps);
+QVector<double> bandPassFilter(QVector<double>& signal, double f1, double f2, double fs, int num_taps);
 private:
     int n ;          //信号数组大小
     QVector<double> h;//滤波器系数

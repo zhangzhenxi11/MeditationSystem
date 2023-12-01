@@ -10,13 +10,8 @@ mySliderWidget::mySliderWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     m_ptrStackWidget = new QStackedWidget;
-    // ffemg库版本
-    unsigned version = avcodec_version();
-    qDebug()<< "verision" << version;
-
     this->initForm();
     loadMedia("../FFTW/sound_lib/mp4", "../FFTW/sound_lib/mp3");
-//    ui->listWidget->setGeometry(QRect(830,400,251,321));
 }
 
 void mySliderWidget::loadMedia(const QString& videoFilePath,const QString & audioFilePath)
@@ -149,15 +144,6 @@ void mySliderWidget::initForm()
 //    mVideoPlayer->stop();
 }
 
-mySliderWidget*mySliderWidget::m_instance = nullptr;
-mySliderWidget *mySliderWidget::GetKernel()
-{
-    if(m_instance==nullptr)
-    {
-        m_instance= new mySliderWidget();
-    }
-    return m_instance;
-}
 
 mySliderWidget::~mySliderWidget()
 {
